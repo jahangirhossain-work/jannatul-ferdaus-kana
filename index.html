@@ -26,9 +26,9 @@
                             950: '#3b0764', // Darkest Purple
                         },
                         dark: {
-                            900: '#140326', // Deepest background purple
-                            800: '#23083d', // Panel background
-                            700: '#380e63', // Hover states
+                            950: '#0a0312', // Ultra dark background
+                            900: '#140526', // Panel background
+                            800: '#1f0a3a', // Card background
                         },
                         accent: '#d946ef', // Fuchsia
                     },
@@ -38,17 +38,22 @@
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'spin-slow': 'spin 12s linear infinite',
-                        'fill-bar': 'fillBar 1.5s ease-out forwards',
+                        'spin-slow': 'spin 15s linear infinite',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                        'shimmer': 'shimmer 2s linear infinite',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
-                            '50%': { transform: 'translateY(-20px)' },
+                            '50%': { transform: 'translateY(-10px)' },
                         },
-                        fillBar: {
-                            '0%': { width: '0%' },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-1000px 0' },
+                            '100%': { backgroundPosition: '1000px 0' }
                         }
                     },
                     backgroundImage: {
@@ -64,22 +69,20 @@
         /* --- Base & Scrollbar --- */
         body {
             cursor: none;
-            background-color: #140326; /* Brand Dark 900 - Deep Purple */
+            background-color: #0a0312;
             color: #e2e8f0;
+            overflow-x: hidden;
         }
 
         ::-webkit-scrollbar {
-            width: 8px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #140326;
+            background: #0a0312;
         }
         ::-webkit-scrollbar-thumb {
-            background: #6b21a8;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #9333ea;
+            background: #581c87;
+            border-radius: 3px;
         }
 
         /* --- Custom Cursor --- */
@@ -92,19 +95,19 @@
             pointer-events: none;
         }
         .cursor-dot {
-            width: 8px; height: 8px;
-            background-color: #c084fc;
-            box-shadow: 0 0 10px #c084fc;
+            width: 6px; height: 6px;
+            background-color: #d8b4fe;
+            box-shadow: 0 0 10px #d8b4fe;
         }
         .cursor-outline {
-            width: 40px; height: 40px;
-            border: 1px solid rgba(192, 132, 252, 0.3);
+            width: 30px; height: 30px;
+            border: 1px solid rgba(216, 180, 254, 0.4);
             transition: width 0.2s, height 0.2s, background-color 0.2s;
         }
         body.hovering .cursor-outline {
-            width: 70px; height: 70px;
-            background-color: rgba(192, 132, 252, 0.05);
-            border-color: #c084fc;
+            width: 60px; height: 60px;
+            background-color: rgba(216, 180, 254, 0.05);
+            border-color: #d8b4fe;
         }
         @media (max-width: 768px) {
             body { cursor: auto; }
@@ -113,387 +116,259 @@
 
         /* --- Glassmorphism & Effects --- */
         .glass-nav {
-            background: rgba(20, 3, 38, 0.8);
-            backdrop-filter: blur(16px);
+            background: rgba(10, 3, 18, 0.8);
+            backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         
-        .glass-card {
-            background: rgba(59, 7, 100, 0.15); /* Slightly purple tinted glass */
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(168, 85, 247, 0.1);
-            transition: all 0.4s ease;
+        .bento-card {
+            background: rgba(31, 10, 58, 0.4); 
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
-        .glass-card:hover {
-            background: rgba(88, 28, 135, 0.3);
-            border-color: rgba(168, 85, 247, 0.5); /* Brand 500 */
-            box-shadow: 0 0 30px rgba(147, 51, 234, 0.2);
-            transform: translateY(-5px);
+        .bento-card:hover {
+            background: rgba(45, 27, 78, 0.7);
+            border-color: rgba(168, 85, 247, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px -10px rgba(126, 34, 206, 0.3);
         }
-
-        .text-glow {
-            text-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+        
+        /* Spotlight Effect */
+        .spotlight {
+            background: radial-gradient(600px circle at var(--x) var(--y), rgba(139, 92, 246, 0.15), transparent 40%);
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 1;
+            pointer-events: none;
         }
 
         /* --- Scroll Reveal Animation --- */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
-            transition: all 0.8s ease-out;
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* --- Blog Card Image Zoom --- */
-        .blog-card:hover img {
-            transform: scale(1.05);
+        .text-gradient {
+            background: linear-gradient(135deg, #fff 0%, #d8b4fe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-
-        /* --- Funnel Graphic --- */
-        .funnel-step {
-            clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
+        
+        .timeline-line {
+            position: absolute;
+            left: 2rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #7e22ce, #3b0764 90%, transparent);
         }
     </style>
 </head>
-<body class="antialiased overflow-x-hidden selection:bg-brand-500 selection:text-white">
+<body class="antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Mouse Spotlight -->
+    <div class="spotlight"></div>
 
     <!-- Custom Cursor -->
     <div class="cursor-dot hidden md:block"></div>
     <div class="cursor-outline hidden md:block"></div>
 
     <!-- Audio Toggle -->
-    <button id="sound-toggle" class="fixed bottom-6 right-6 z-50 glass-card w-12 h-12 rounded-full flex items-center justify-center text-brand-300 hover:text-white transition-colors group interactable" aria-label="Toggle Sound">
+    <button id="sound-toggle" class="fixed bottom-8 right-8 z-50 bento-card w-12 h-12 rounded-full flex items-center justify-center text-brand-300 hover:text-white transition-colors group interactable" aria-label="Toggle Sound">
         <i class="fas fa-volume-up text-lg group-hover:animate-pulse"></i>
     </button>
 
     <!-- Navigation -->
     <nav class="fixed w-full z-40 glass-nav transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-24">
-                <!-- Logo -->
+            <div class="flex justify-between items-center h-20">
                 <div class="flex-shrink-0 flex items-center interactable">
-                    <a href="#" class="text-3xl font-serif font-bold text-white tracking-tight">
-                        Jannatul<span class="text-brand-500 text-4xl">.</span>
+                    <a href="#" class="text-2xl font-serif font-bold text-white tracking-tight flex items-center gap-2">
+                        <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white text-lg font-bold">J</div>
+                        <span>Jannatul<span class="text-brand-500">.</span></span>
                     </a>
                 </div>
                 
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-10 items-center">
-                    <a href="#home" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">Home</a>
-                    <a href="#services" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">Expertise</a>
-                    <a href="#process" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">Process</a>
-                    <a href="#portfolio" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">Work</a>
-                    <a href="#contact" class="interactable px-7 py-3 bg-gradient-to-r from-brand-600 to-brand-800 text-white font-medium rounded-full hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] transition transform hover:-translate-y-0.5 border border-white/10">
-                        Let's Talk
-                    </a>
+                <div class="hidden lg:flex space-x-1 items-center bg-white/5 p-1 rounded-full border border-white/5 backdrop-blur-md">
+                    <a href="#home" class="interactable px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 transition">Home</a>
+                    <a href="#about" class="interactable px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 transition">About</a>
+                    <a href="#experience" class="interactable px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 transition">Experience</a>
+                    <a href="#projects" class="interactable px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 transition">Leadership</a>
+                    <a href="#contact" class="interactable ml-2 px-5 py-1.5 bg-brand-600 text-white text-xs font-bold rounded-full hover:bg-brand-500 transition shadow-lg shadow-brand-500/20">Let's Talk</a>
                 </div>
 
-                <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center interactable">
-                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white focus:outline-none p-2">
-                        <i class="fas fa-bars text-2xl"></i>
+                <div class="lg:hidden flex items-center interactable">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white p-2">
+                        <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden md:hidden bg-dark-900/95 backdrop-blur-xl border-t border-white/5 absolute w-full shadow-2xl">
-            <div class="px-4 pt-2 pb-6 space-y-2">
-                <a href="#home" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">Home</a>
-                <a href="#services" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">Expertise</a>
-                <a href="#process" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">Process</a>
-                <a href="#portfolio" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">Portfolio</a>
-                <a href="#contact" class="block px-3 py-3 text-brand-400 font-semibold interactable">Contact Me</a>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-dark-900 border-t border-white/5 absolute w-full shadow-2xl">
+            <div class="px-4 py-4 space-y-2">
+                <a href="#home" class="block px-4 py-3 text-slate-300 bg-white/5 rounded-lg">Home</a>
+                <a href="#about" class="block px-4 py-3 text-slate-300">About</a>
+                <a href="#experience" class="block px-4 py-3 text-slate-300">Experience</a>
+                <a href="#projects" class="block px-4 py-3 text-slate-300">Projects</a>
+                <a href="#contact" class="block px-4 py-3 text-brand-400 font-bold">Contact Me</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <!-- Dynamic Background -->
-        <div class="absolute inset-0 z-0">
-            <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-600/20 rounded-full mix-blend-screen filter blur-[120px] animate-pulse-slow"></div>
-            <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-800/20 rounded-full mix-blend-screen filter blur-[100px] animate-pulse-slow" style="animation-delay: 2s;"></div>
-            <!-- Grid Pattern -->
-            <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-        </div>
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden z-10">
+        <!-- Abstract BG Elements -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-600/10 rounded-full mix-blend-screen filter blur-[100px] animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600/5 rounded-full mix-blend-screen filter blur-[120px]"></div>
+        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full">
             <div class="flex flex-col lg:flex-row items-center gap-16">
-                
-                <div class="lg:w-1/2 text-center lg:text-left reveal active">
-                    <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-300 text-sm font-semibold mb-8 backdrop-blur-sm interactable">
-                        <span class="flex h-2 w-2 relative mr-3">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-400"></span>
-                        </span>
-                        Accepting New Projects for 2025
+                <div class="lg:w-3/5 text-center lg:text-left reveal active">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-300 text-[10px] font-bold tracking-widest uppercase mb-6 backdrop-blur-sm">
+                        <span class="w-2 h-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
+                        Available for Global Projects
                     </div>
                     
-                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-8 leading-[1.1] font-serif">
-                        Mastering the <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-brand-200 to-white text-glow">Digital Ecosystem.</span>
+                    <h1 class="text-5xl sm:text-7xl lg:text-8xl font-bold text-white tracking-tight mb-8 font-serif leading-[0.9]">
+                        Jannatul <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-brand-200 to-white">Ferdous Kana.</span>
                     </h1>
                     
-                    <p class="text-lg text-slate-300 mb-12 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light">
-                        I am <span class="text-white font-medium">Jannatul Ferdous Kana</span>. Expert in scaling brands via Facebook, LinkedIn, and Google ecosystems using data-backed creative strategies.
+                    <p class="text-lg text-slate-400 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light">
+                        <strong class="text-white">MBA-Qualified Digital Strategist.</strong> I bridge the gap between creative storytelling and hard data analytics. Helping organizations achieve long-term success through full-funnel marketing strategies.
                     </p>
                     
-                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-6">
-                        <a href="#contact" class="interactable group px-8 py-4 bg-white text-dark-900 rounded-full font-bold hover:bg-brand-50 transition shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center justify-center">
-                            Start Scaling
-                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
+                        <a href="#experience" class="interactable px-8 py-4 bg-white text-dark-950 rounded-full font-bold hover:bg-brand-50 transition shadow-[0_0_30px_rgba(255,255,255,0.1)] flex items-center justify-center">
+                            View Career Timeline
                         </a>
-                        <a href="#portfolio" class="interactable px-8 py-4 bg-transparent border border-slate-500 text-white rounded-full font-semibold hover:border-brand-400 hover:bg-brand-500/10 transition flex items-center justify-center">
-                            View Case Studies
+                        <a href="mailto:jannatulferdauskana@gmail.com" class="interactable px-8 py-4 bg-white/5 border border-white/10 text-white rounded-full font-semibold hover:bg-white/10 hover:border-white/20 transition flex items-center justify-center backdrop-blur-md">
+                            <i class="fas fa-paper-plane mr-2 text-brand-400"></i> Get in Touch
                         </a>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="mt-12 flex items-center justify-center lg:justify-start gap-8 border-t border-white/5 pt-8">
+                        <div>
+                            <div class="text-2xl font-bold text-white">5+</div>
+                            <div class="text-xs text-slate-500 uppercase tracking-widest">Years Exp</div>
+                        </div>
+                        <div class="w-px h-8 bg-white/10"></div>
+                        <div>
+                            <div class="text-2xl font-bold text-white">MBA</div>
+                            <div class="text-xs text-slate-500 uppercase tracking-widest">Business Strategy</div>
+                        </div>
+                        <div class="w-px h-8 bg-white/10"></div>
+                        <div>
+                            <div class="text-2xl font-bold text-white">100%</div>
+                            <div class="text-xs text-slate-500 uppercase tracking-widest">Data Driven</div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Abstract Visual -->
-                <div class="lg:w-1/2 relative lg:h-[700px] w-full flex items-center justify-center reveal">
-                    <div class="relative w-full max-w-lg aspect-square">
-                        <!-- Orbit Rings -->
-                        <div class="absolute inset-0 border border-brand-500/20 rounded-full animate-spin-slow"></div>
-                        <div class="absolute inset-10 border border-brand-500/10 rounded-full animate-spin-slow" style="animation-direction: reverse;"></div>
+                <div class="lg:w-2/5 relative reveal hidden lg:block">
+                     <div class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-dark-900 group">
+                         <!-- Placeholder for Image -->
+                        <div class="absolute inset-0 bg-gradient-to-b from-brand-900/20 to-dark-950 flex flex-col items-center justify-center">
+                            <i class="fas fa-user-circle text-8xl text-white/10 group-hover:text-brand-500/20 transition duration-500"></i>
+                            <div class="mt-4 text-xs font-mono text-slate-500">Add Portrait Here</div>
+                        </div>
                         
-                        <!-- Central Image Container -->
-                        <div class="absolute inset-20 rounded-full overflow-hidden border-2 border-white/10 shadow-[0_0_50px_rgba(147,51,234,0.3)] animate-float bg-dark-800">
-                             <div class="w-full h-full bg-gradient-to-br from-brand-900 to-dark-900 flex flex-col items-center justify-center text-slate-400 group interactable">
-                                <i class="fas fa-user-circle text-8xl mb-4 text-brand-500/50 group-hover:text-brand-400 transition-colors"></i>
-                                <span class="font-serif italic text-white/50">Jannatul F. Kana</span>
-                             </div>
+                        <!-- Floating Badge -->
+                        <div class="absolute bottom-6 left-6 right-6 bg-white/10 backdrop-blur-md border border-white/10 p-4 rounded-xl">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center text-white">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white font-bold text-sm">Certified Expert</div>
+                                    <div class="text-slate-400 text-xs">Google & Meta Ads</div>
+                                </div>
+                            </div>
                         </div>
-
-                        <!-- Floating Social Icons -->
-                        <div class="absolute top-10 right-0 glass-card w-16 h-16 rounded-2xl flex items-center justify-center animate-float interactable" style="animation-delay: 0.5s;">
-                            <i class="fab fa-facebook-f text-3xl text-blue-500"></i>
-                        </div>
-                        <div class="absolute bottom-40 right-10 glass-card w-16 h-16 rounded-2xl flex items-center justify-center animate-float interactable" style="animation-delay: 1.5s;">
-                            <i class="fab fa-linkedin-in text-3xl text-blue-400"></i>
-                        </div>
-                         <div class="absolute bottom-20 left-10 glass-card w-16 h-16 rounded-2xl flex items-center justify-center animate-float interactable" style="animation-delay: 2.5s;">
-                            <i class="fab fa-google text-3xl text-red-500"></i>
-                        </div>
-                    </div>
+                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services / Platform Mastery Section -->
-    <section id="services" class="py-24 relative overflow-hidden bg-dark-800">
+    <!-- About / Bento Grid Section -->
+    <section id="about" class="py-24 relative z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-20 reveal">
-                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">My Arsenal</span>
-                <h2 class="text-4xl lg:text-5xl font-serif font-bold text-white">Platform Ecosystems</h2>
-                <p class="text-slate-400 mt-4 max-w-2xl mx-auto">I don't just "run ads". I build interconnected funnels across the world's largest platforms to capture demand at every stage.</p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-6 relative z-10">
-                
-                <!-- Facebook/Meta Card -->
-                <div class="glass-card p-8 rounded-3xl group interactable reveal hover:bg-blue-900/10 border-t-4 border-t-blue-500">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="w-16 h-16 bg-blue-600/20 rounded-2xl flex items-center justify-center text-blue-500 text-3xl">
-                            <i class="fab fa-facebook"></i>
-                        </div>
-                        <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold uppercase tracking-wider">B2C & D2C</span>
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Bio Card -->
+                <div class="md:col-span-2 bento-card p-8 rounded-3xl reveal">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-star text-brand-500"></i>
+                        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">About Me</span>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">Meta Ads (FB & IG)</h3>
-                    <p class="text-slate-400 text-sm mb-6">Full-funnel architecture from awareness to conversion.</p>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-center">
-                            <div class="w-full bg-dark-900 rounded-full h-2 mr-3">
-                                <div class="bg-blue-500 h-2 rounded-full w-[95%] shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
-                            </div>
-                            <span class="text-xs font-bold text-blue-400">95%</span>
-                        </div>
-                        <ul class="text-xs text-slate-400 space-y-2">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Creative Sandbox Testing</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> CAPI & Pixel Setup</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Lookalike & Custom Audiences</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- LinkedIn Card -->
-                <div class="glass-card p-8 rounded-3xl group interactable reveal hover:bg-sky-900/10 border-t-4 border-t-sky-600" style="transition-delay: 100ms;">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="w-16 h-16 bg-sky-600/20 rounded-2xl flex items-center justify-center text-sky-500 text-3xl">
-                            <i class="fab fa-linkedin-in"></i>
-                        </div>
-                        <span class="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 text-xs font-bold uppercase tracking-wider">B2B Leads</span>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">LinkedIn Marketing</h3>
-                    <p class="text-slate-400 text-sm mb-6">Precision targeting for decision makers and ABM strategies.</p>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-center">
-                            <div class="w-full bg-dark-900 rounded-full h-2 mr-3">
-                                <div class="bg-sky-500 h-2 rounded-full w-[90%] shadow-[0_0_10px_rgba(14,165,233,0.5)]"></div>
-                            </div>
-                            <span class="text-xs font-bold text-sky-400">90%</span>
-                        </div>
-                        <ul class="text-xs text-slate-400 space-y-2">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-sky-500 mr-2"></i> Account Based Marketing (ABM)</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-sky-500 mr-2"></i> Lead Gen Forms</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-sky-500 mr-2"></i> Sales Navigator Strategy</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Google/PPC Card -->
-                <div class="glass-card p-8 rounded-3xl group interactable reveal hover:bg-red-900/10 border-t-4 border-t-red-500" style="transition-delay: 200ms;">
-                    <div class="flex justify-between items-start mb-6">
-                        <div class="w-16 h-16 bg-red-600/20 rounded-2xl flex items-center justify-center text-red-500 text-3xl">
-                            <i class="fab fa-google"></i>
-                        </div>
-                        <span class="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-xs font-bold uppercase tracking-wider">High Intent</span>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-2">Google Ads (PPC)</h3>
-                    <p class="text-slate-400 text-sm mb-6">Capturing demand exactly when customers are searching.</p>
-                    
-                    <div class="space-y-4">
-                        <div class="flex items-center">
-                            <div class="w-full bg-dark-900 rounded-full h-2 mr-3">
-                                <div class="bg-red-500 h-2 rounded-full w-[88%] shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
-                            </div>
-                            <span class="text-xs font-bold text-red-400">88%</span>
-                        </div>
-                        <ul class="text-xs text-slate-400 space-y-2">
-                            <li class="flex items-center"><i class="fas fa-check-circle text-red-500 mr-2"></i> Search & Shopping Ads</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-red-500 mr-2"></i> YouTube Video Campaigns</li>
-                            <li class="flex items-center"><i class="fas fa-check-circle text-red-500 mr-2"></i> GA4 & Tag Manager</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Graphical Funnel Visualization -->
-            <div class="mt-24 reveal">
-                <div class="text-center mb-12">
-                    <h3 class="text-2xl font-bold text-white">Growth Architecture</h3>
-                    <p class="text-slate-400 text-sm">How channels connect to drive revenue</p>
-                </div>
-                
-                <div class="relative max-w-4xl mx-auto">
-                    <!-- Funnel Steps -->
-                    <div class="flex flex-col gap-2 relative z-10">
-                        <!-- Top Funnel (Awareness) -->
-                        <div class="funnel-step bg-gradient-to-r from-blue-900 to-sky-900 h-24 flex items-center justify-center w-full mx-auto relative group interactable">
-                            <div class="text-center">
-                                <div class="text-white font-bold text-lg">Awareness & Traffic</div>
-                                <div class="flex gap-4 mt-2 justify-center text-2xl text-white/70">
-                                    <i class="fab fa-facebook hover:text-white transition"></i>
-                                    <i class="fab fa-instagram hover:text-white transition"></i>
-                                    <i class="fab fa-tiktok hover:text-white transition"></i>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Mid Funnel (Consideration) -->
-                        <div class="funnel-step bg-gradient-to-r from-brand-900 to-purple-900 h-24 flex items-center justify-center w-[85%] mx-auto relative group interactable">
-                            <div class="text-center">
-                                <div class="text-white font-bold text-lg">Consideration & Intent</div>
-                                <div class="flex gap-4 mt-2 justify-center text-2xl text-white/70">
-                                    <i class="fab fa-google hover:text-white transition"></i>
-                                    <i class="fab fa-linkedin hover:text-white transition"></i>
-                                    <i class="fas fa-envelope hover:text-white transition"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Bottom Funnel (Conversion) -->
-                        <div class="funnel-step bg-gradient-to-r from-green-900 to-emerald-900 h-24 flex items-center justify-center w-[70%] mx-auto relative group interactable">
-                            <div class="text-center">
-                                <div class="text-white font-bold text-lg">Conversion & Sales</div>
-                                <div class="flex gap-4 mt-2 justify-center text-2xl text-white/70">
-                                    <i class="fas fa-shopping-cart hover:text-white transition"></i>
-                                    <i class="fas fa-file-contract hover:text-white transition"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technical Mastery / Skills Section -->
-    <section class="py-20 bg-dark-900 border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div class="reveal">
-                    <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">Technical Skills</span>
-                    <h2 class="text-3xl font-serif font-bold text-white mb-6">Tools of the Trade</h2>
-                    <p class="text-slate-400 mb-8 leading-relaxed">
-                        Strategy is nothing without execution. I am proficient in the industry-standard tools required to track, optimize, and scale campaigns effectively.
+                    <h2 class="text-3xl font-serif font-bold text-white mb-4">Strategic & Analytical</h2>
+                    <p class="text-slate-400 leading-relaxed">
+                        I am a motivated Digital Marketing Specialist with extensive experience in market research, strategic planning, and analytics. Skilled in leveraging management expertise to drive business growth, enhance brand visibility, and deliver measurable results.
                     </p>
-                    
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-dark-800 p-4 rounded-lg flex items-center gap-3 border border-white/5">
-                            <i class="fas fa-chart-bar text-brand-400 text-xl"></i>
-                            <span class="text-slate-300 font-medium text-sm">GA4 Analytics</span>
+                    <div class="mt-6 flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-white border border-white/5">Market Research</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-white border border-white/5">Strategic Planning</span>
+                        <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-white border border-white/5">Brand Visibility</span>
+                    </div>
+                </div>
+
+                <!-- Languages Card -->
+                <div class="bento-card p-8 rounded-3xl reveal" style="transition-delay: 100ms">
+                     <div class="flex items-center gap-2 mb-4">
+                        <i class="fas fa-globe text-brand-500"></i>
+                        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Languages</span>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                            <span class="text-white text-sm">Bangla</span>
+                            <span class="text-brand-400 text-xs font-bold">Native</span>
                         </div>
-                        <div class="bg-dark-800 p-4 rounded-lg flex items-center gap-3 border border-white/5">
-                            <i class="fas fa-tag text-brand-400 text-xl"></i>
-                            <span class="text-slate-300 font-medium text-sm">Google Tag Manager</span>
+                        <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                            <span class="text-white text-sm">English</span>
+                            <span class="text-brand-400 text-xs font-bold">Fluent</span>
                         </div>
-                        <div class="bg-dark-800 p-4 rounded-lg flex items-center gap-3 border border-white/5">
-                            <i class="fas fa-robot text-brand-400 text-xl"></i>
-                            <span class="text-slate-300 font-medium text-sm">HubSpot CRM</span>
-                        </div>
-                        <div class="bg-dark-800 p-4 rounded-lg flex items-center gap-3 border border-white/5">
-                            <i class="fas fa-paint-brush text-brand-400 text-xl"></i>
-                            <span class="text-slate-300 font-medium text-sm">Canva Pro</span>
+                        <div class="flex justify-between items-center border-b border-white/5 pb-2">
+                            <span class="text-white text-sm">Malay</span>
+                            <span class="text-brand-400 text-xs font-bold">Professional</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="reveal space-y-6">
-                    <!-- Skill Bar 1 -->
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-white font-bold text-sm">Strategic Planning</span>
-                            <span class="text-brand-400 font-bold text-sm">98%</span>
-                        </div>
-                        <div class="h-2 bg-dark-800 rounded-full overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-brand-600 to-accent w-0 animate-fill-bar" style="width: 98%; animation-delay: 0.2s"></div>
-                        </div>
+                <!-- Soft Skills Card -->
+                <div class="md:col-span-3 bento-card p-8 rounded-3xl reveal" style="transition-delay: 200ms">
+                    <div class="flex items-center gap-2 mb-6">
+                        <i class="fas fa-brain text-brand-500"></i>
+                        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Core Competencies</span>
                     </div>
-                    <!-- Skill Bar 2 -->
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-white font-bold text-sm">Copywriting</span>
-                            <span class="text-brand-400 font-bold text-sm">92%</span>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="bg-dark-900/50 p-4 rounded-xl border border-white/5 text-center hover:bg-brand-900/20 transition interactable">
+                            <i class="fas fa-users text-brand-400 mb-2 text-xl"></i>
+                            <div class="text-white text-sm font-bold">Leadership</div>
                         </div>
-                        <div class="h-2 bg-dark-800 rounded-full overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-brand-600 to-accent w-0 animate-fill-bar" style="width: 92%; animation-delay: 0.4s"></div>
+                        <div class="bg-dark-900/50 p-4 rounded-xl border border-white/5 text-center hover:bg-brand-900/20 transition interactable">
+                            <i class="fas fa-project-diagram text-brand-400 mb-2 text-xl"></i>
+                            <div class="text-white text-sm font-bold">Project Mgmt</div>
                         </div>
-                    </div>
-                    <!-- Skill Bar 3 -->
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-white font-bold text-sm">Data Analysis</span>
-                            <span class="text-brand-400 font-bold text-sm">95%</span>
+                        <div class="bg-dark-900/50 p-4 rounded-xl border border-white/5 text-center hover:bg-brand-900/20 transition interactable">
+                            <i class="fas fa-lightbulb text-brand-400 mb-2 text-xl"></i>
+                            <div class="text-white text-sm font-bold">Problem Solving</div>
                         </div>
-                        <div class="h-2 bg-dark-800 rounded-full overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-brand-600 to-accent w-0 animate-fill-bar" style="width: 95%; animation-delay: 0.6s"></div>
-                        </div>
-                    </div>
-                    <!-- Skill Bar 4 -->
-                    <div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-white font-bold text-sm">Email Automation</span>
-                            <span class="text-brand-400 font-bold text-sm">88%</span>
-                        </div>
-                        <div class="h-2 bg-dark-800 rounded-full overflow-hidden">
-                            <div class="h-full bg-gradient-to-r from-brand-600 to-accent w-0 animate-fill-bar" style="width: 88%; animation-delay: 0.8s"></div>
+                        <div class="bg-dark-900/50 p-4 rounded-xl border border-white/5 text-center hover:bg-brand-900/20 transition interactable">
+                            <i class="fas fa-comments text-brand-400 mb-2 text-xl"></i>
+                            <div class="text-white text-sm font-bold">Communication</div>
                         </div>
                     </div>
                 </div>
@@ -501,263 +376,218 @@
         </div>
     </section>
 
-    <!-- Work Section -->
-    <section id="portfolio" class="py-24 bg-dark-800 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
-                <div>
-                    <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">Selected Works</span>
-                    <h2 class="text-4xl lg:text-5xl font-serif font-bold text-white">Case Studies</h2>
-                </div>
-                <a href="#" class="interactable mt-6 md:mt-0 text-brand-300 hover:text-white text-sm font-semibold tracking-widest uppercase border-b border-brand-500 pb-1 hover:border-white transition">View All Projects</a>
+    <!-- Experience Section (Timeline) -->
+    <section id="experience" class="py-24 bg-dark-900 relative z-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-16 reveal">
+                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-2 block">Career Path</span>
+                <h2 class="text-4xl font-serif font-bold text-white">Professional Experience</h2>
             </div>
 
-            <div class="space-y-20">
+            <div class="relative pl-8 sm:pl-12">
+                <!-- Timeline Line -->
+                <div class="timeline-line"></div>
+
+                <!-- Job 1 -->
+                <div class="mb-12 relative reveal">
+                    <div class="absolute -left-10 sm:-left-14 top-1.5 w-4 h-4 rounded-full bg-brand-500 border-4 border-dark-900 shadow-[0_0_10px_rgba(168,85,247,0.8)]"></div>
+                    <div class="bento-card p-6 rounded-2xl hover:bg-brand-900/10 transition interactable">
+                        <div class="flex flex-col sm:flex-row justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Digital Marketing Strategist</h3>
+                            <span class="text-xs font-mono text-brand-300">Oct 2023 - Present</span>
+                        </div>
+                        <div class="text-brand-500 font-bold text-sm mb-4">Future Wish Education</div>
+                        <p class="text-slate-400 text-sm mb-4">Promoted consultancy connecting students to top universities in Malaysia, UK, USA, Australia, & Canada.</p>
+                        <ul class="text-slate-500 text-xs list-disc list-inside space-y-1">
+                            <li>Executed multi-national digital strategies increasing inquiries.</li>
+                            <li>Managed social media, SEO, and targeted ads.</li>
+                            <li>Streamlined student engagement with admissions teams.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Job 2 -->
+                <div class="mb-12 relative reveal">
+                    <div class="absolute -left-10 sm:-left-14 top-1.5 w-4 h-4 rounded-full bg-slate-600 border-4 border-dark-900"></div>
+                    <div class="bento-card p-6 rounded-2xl hover:bg-brand-900/10 transition interactable">
+                        <div class="flex flex-col sm:flex-row justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Brand & Marketing Manager</h3>
+                            <span class="text-xs font-mono text-brand-300">Oct 2023 - June 2025</span>
+                        </div>
+                        <div class="text-brand-500 font-bold text-sm mb-4">Global Brand Outlet Malaysia</div>
+                        <ul class="text-slate-500 text-xs list-disc list-inside space-y-1">
+                            <li>Directed end-to-end marketing from visual identity to conversion.</li>
+                            <li>Strengthened online presence through influencer collaborations.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Job 3 (Missing Role Added) -->
+                <div class="mb-12 relative reveal">
+                    <div class="absolute -left-10 sm:-left-14 top-1.5 w-4 h-4 rounded-full bg-slate-600 border-4 border-dark-900"></div>
+                    <div class="bento-card p-6 rounded-2xl hover:bg-brand-900/10 transition interactable">
+                        <div class="flex flex-col sm:flex-row justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Digital Marketing Manager</h3>
+                            <span class="text-xs font-mono text-brand-300">Jan 2022 - Apr 2023</span>
+                        </div>
+                        <div class="text-brand-500 font-bold text-sm mb-4">Expert IT Park, Bangladesh</div>
+                        <ul class="text-slate-500 text-xs list-disc list-inside space-y-1">
+                            <li>Spearheaded digital growth crafting full-funnel strategies.</li>
+                            <li>Scaled YouTube channels via SEO & monetization.</li>
+                            <li>Integrated GA4, GTM, and GMC for deep audience insights.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                 <!-- Job 4 (Missing Role Added) -->
+                <div class="mb-12 relative reveal">
+                    <div class="absolute -left-10 sm:-left-14 top-1.5 w-4 h-4 rounded-full bg-slate-600 border-4 border-dark-900"></div>
+                    <div class="bento-card p-6 rounded-2xl hover:bg-brand-900/10 transition interactable">
+                        <div class="flex flex-col sm:flex-row justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Digital Marketing Executive</h3>
+                            <span class="text-xs font-mono text-brand-300">Sep 2022</span>
+                        </div>
+                        <div class="text-brand-500 font-bold text-sm mb-4">Leading Xeco Partner, Malaysia</div>
+                        <ul class="text-slate-500 text-xs list-disc list-inside space-y-1">
+                            <li>Orchestrated campaigns for a SaaS cloud accounting platform.</li>
+                            <li>Built Meta & Google Ads campaigns generating qualified leads.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Job 5 -->
+                <div class="mb-12 relative reveal">
+                    <div class="absolute -left-10 sm:-left-14 top-1.5 w-4 h-4 rounded-full bg-slate-600 border-4 border-dark-900"></div>
+                    <div class="bento-card p-6 rounded-2xl hover:bg-brand-900/10 transition interactable">
+                        <div class="flex flex-col sm:flex-row justify-between mb-2">
+                            <h3 class="text-xl font-bold text-white">Ads Strategist</h3>
+                            <span class="text-xs font-mono text-brand-300">Oct 2023 - Feb 2025</span>
+                        </div>
+                        <div class="text-brand-500 font-bold text-sm mb-4">Tajdid Malaysia</div>
+                        <p class="text-slate-400 text-sm">Crafted full-funnel advertising strategies with advanced audience targeting and pixel tracking.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership & Projects Section (New) -->
+    <section id="projects" class="py-24 bg-dark-950 relative z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 reveal">
+                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-2 block">Beyond Marketing</span>
+                <h2 class="text-4xl font-serif font-bold text-white">Leadership & Projects</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
                 <!-- Project 1 -->
-                <div class="group relative grid md:grid-cols-12 gap-8 items-center reveal interactable">
-                    <div class="md:col-span-7 relative z-10">
-                        <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/5 relative">
-                            <div class="absolute inset-0 bg-gradient-to-tr from-brand-900 to-dark-900 group-hover:scale-105 transition-transform duration-700"></div>
-                            <!-- Mock UI -->
-                            <div class="absolute inset-0 flex items-center justify-center">
-                                <i class="fas fa-shopping-bag text-6xl text-white/10 group-hover:text-brand-400/20 transition-colors"></i>
-                            </div>
-                        </div>
+                <div class="bento-card p-8 rounded-3xl reveal interactable group">
+                    <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-400 text-2xl mb-6">
+                        <i class="fas fa-robot"></i>
                     </div>
-                    <div class="md:col-span-5 md:-ml-12 relative z-20">
-                        <div class="glass-card p-8 rounded-2xl shadow-xl">
-                            <div class="text-brand-400 text-xs font-bold uppercase tracking-widest mb-3">E-Commerce • Fashion</div>
-                            <h3 class="text-3xl font-serif font-bold text-white mb-4">Velvet & Vogue</h3>
-                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                                A complete digital overhaul for a luxury fashion retailer. We implemented a multi-channel funnel strategy that utilized Instagram Reels for top-of-funnel awareness and email flows for retention.
-                            </p>
-                            <div class="flex gap-4 mb-6">
-                                <div class="bg-brand-500/10 px-3 py-1 rounded text-xs text-brand-300">Shopify</div>
-                                <div class="bg-brand-500/10 px-3 py-1 rounded text-xs text-brand-300">Klaviyo</div>
-                                <div class="bg-brand-500/10 px-3 py-1 rounded text-xs text-brand-300">Meta Ads</div>
-                            </div>
-                            <div class="flex items-center gap-6">
-                                <div>
-                                    <span class="block text-2xl font-bold text-white">3.5x</span>
-                                    <span class="text-xs text-slate-500 uppercase">ROAS</span>
-                                </div>
-                                <div>
-                                    <span class="block text-2xl font-bold text-white">+200%</span>
-                                    <span class="text-xs text-slate-500 uppercase">Traffic</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Project Manager</h3>
+                    <p class="text-sm text-brand-400 font-bold mb-4">Unikidz Robotic Programming • UMT</p>
+                    <p class="text-slate-400 text-sm mb-6">Led the Treasurer's Office, Admin & Quality Management section. Organized Technical Bootcamps (TAB) fostering STEM education.</p>
+                    <span class="text-xs text-slate-500 uppercase tracking-widest border border-white/10 px-3 py-1 rounded-full">Leadership</span>
                 </div>
 
                 <!-- Project 2 -->
-                <div class="group relative grid md:grid-cols-12 gap-8 items-center reveal interactable">
-                    <div class="md:col-span-5 md:order-1 order-2 relative z-20 md:-mr-12">
-                         <div class="glass-card p-8 rounded-2xl shadow-xl md:text-right">
-                            <div class="text-brand-400 text-xs font-bold uppercase tracking-widest mb-3">SaaS • B2B</div>
-                            <h3 class="text-3xl font-serif font-bold text-white mb-4">DataFlow Systems</h3>
-                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                                Generated high-quality leads for an enterprise software solution. The strategy focused heavily on LinkedIn thought leadership and gated whitepaper assets to capture decision-maker emails.
-                            </p>
-                            <div class="flex gap-4 mb-6 md:justify-end">
-                                <div class="bg-brand-500/10 px-3 py-1 rounded text-xs text-brand-300">LinkedIn</div>
-                                <div class="bg-brand-500/10 px-3 py-1 rounded text-xs text-brand-300">HubSpot</div>
-                                <div class="bg-brand-500/10 px-3 py-1 rounded text-xs text-brand-300">SEO</div>
-                            </div>
-                             <div class="flex items-center gap-6 md:justify-end">
-                                <div>
-                                    <span class="block text-2xl font-bold text-white">450+</span>
-                                    <span class="text-xs text-slate-500 uppercase">SQLs Generated</span>
-                                </div>
-                                <div>
-                                    <span class="block text-2xl font-bold text-white">-40%</span>
-                                    <span class="text-xs text-slate-500 uppercase">CPA</span>
-                                </div>
-                            </div>
-                        </div>
+                <div class="bento-card p-8 rounded-3xl reveal interactable group">
+                    <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center text-green-400 text-2xl mb-6">
+                        <i class="fas fa-hand-holding-heart"></i>
                     </div>
-                    <div class="md:col-span-7 md:order-2 order-1 relative z-10">
-                        <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/5 relative">
-                            <div class="absolute inset-0 bg-gradient-to-tl from-brand-800 to-dark-900 group-hover:scale-105 transition-transform duration-700"></div>
-                             <div class="absolute inset-0 flex items-center justify-center">
-                                <i class="fas fa-server text-6xl text-white/10 group-hover:text-brand-400/20 transition-colors"></i>
-                            </div>
-                        </div>
-                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Social Responsibility</h3>
+                    <p class="text-sm text-brand-400 font-bold mb-4">Tax YR Buddy LHDN • UMT</p>
+                    <p class="text-slate-400 text-sm mb-6">Active participant in University Social Responsibility (USR) programs. Engaged in community outreach and book review competitions.</p>
+                    <span class="text-xs text-slate-500 uppercase tracking-widest border border-white/10 px-3 py-1 rounded-full">USR Program</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-24 relative overflow-hidden">
-        <div class="absolute inset-0 opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
-        
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="bg-gradient-to-br from-brand-900 to-dark-900 rounded-[3rem] overflow-hidden shadow-2xl border border-white/10">
-                
-                <div class="grid lg:grid-cols-2 gap-0">
-                    <!-- Text Side -->
-                    <div class="p-12 lg:p-16 flex flex-col justify-between text-white relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-600 rounded-full mix-blend-overlay filter blur-[80px] opacity-40"></div>
-                        
-                        <div>
-                            <h2 class="text-4xl font-serif font-bold mb-6">Let's build your legacy.</h2>
-                            <p class="text-brand-100 text-lg mb-8 font-light">Your brand deserves a strategy as unique as your vision. Send me a message and let's start the conversation.</p>
-                            
-                            <div class="space-y-6">
-                                <a href="mailto:hello@jannatul.com" class="interactable flex items-center space-x-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition border border-white/5">
-                                    <div class="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center text-white"><i class="fas fa-envelope"></i></div>
-                                    <span class="font-medium">hello@jannatul.com</span>
-                                </a>
-                                <div class="interactable flex items-center space-x-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition border border-white/5">
-                                    <div class="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center text-white"><i class="fas fa-map-marker-alt"></i></div>
-                                    <span class="font-medium">Dhaka, Bangladesh</span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-12">
-                            <h5 class="text-xs uppercase tracking-widest text-brand-300 mb-4">Connect</h5>
-                            <div class="flex space-x-4">
-                                <a href="#" class="interactable w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-brand-900 transition"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#" class="interactable w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-brand-900 transition"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="interactable w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-brand-900 transition"><i class="fab fa-instagram"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Form Side -->
-                    <div class="bg-dark-900 p-12 lg:p-16">
-                        <form class="space-y-6">
-                            <div>
-                                <label class="block text-xs font-bold text-brand-400 uppercase tracking-widest mb-2">Your Name</label>
-                                <input type="text" class="interactable w-full px-4 py-3 bg-dark-800 border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500 text-white transition placeholder-slate-600" placeholder="John Doe">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-brand-400 uppercase tracking-widest mb-2">Email Address</label>
-                                <input type="email" class="interactable w-full px-4 py-3 bg-dark-800 border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500 text-white transition placeholder-slate-600" placeholder="john@company.com">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-bold text-brand-400 uppercase tracking-widest mb-2">Project Details</label>
-                                <textarea rows="3" class="interactable w-full px-4 py-3 bg-dark-800 border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500 text-white transition placeholder-slate-600" placeholder="Tell me about your goals..."></textarea>
-                            </div>
-                            <button class="interactable w-full py-4 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-500 transition shadow-[0_0_20px_rgba(147,51,234,0.4)] transform hover:-translate-y-1">
-                                Send Message
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Enhanced Footer -->
-    <footer class="bg-dark-900 text-slate-400 py-16 border-t border-white/5">
+    <!-- Education & Certs -->
+    <section class="py-24 bg-dark-900 border-t border-white/5 relative z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-12 mb-12">
-                <div class="col-span-1 md:col-span-2">
-                    <a href="#" class="text-3xl font-serif font-bold text-white tracking-tight mb-6 block">
-                        Jannatul<span class="text-brand-500">.</span>
-                    </a>
-                    <p class="text-sm text-slate-500 max-w-sm mb-6">
-                        A digital portfolio showcasing a commitment to data-driven growth and creative excellence. Let's make the web work for you.
-                    </p>
-                    <!-- Newsletter -->
-                    <div class="max-w-xs">
-                        <label class="text-xs font-bold text-white uppercase tracking-widest mb-2 block">Subscribe to insights</label>
-                        <div class="flex">
-                            <input type="email" placeholder="Email address" class="bg-dark-800 border-none text-white text-sm px-4 py-2 rounded-l-lg w-full focus:ring-1 focus:ring-brand-500 outline-none">
-                            <button class="bg-brand-600 text-white px-4 py-2 rounded-r-lg hover:bg-brand-500 transition"><i class="fas fa-arrow-right"></i></button>
+            <div class="grid lg:grid-cols-2 gap-16">
+                <!-- Education -->
+                <div class="reveal">
+                    <h3 class="text-2xl font-bold text-white mb-8 border-l-4 border-brand-500 pl-4">Education</h3>
+                    <div class="space-y-8">
+                        <div class="group interactable">
+                            <h4 class="text-xl font-bold text-white group-hover:text-brand-400 transition">Master of Business Administration (MBA)</h4>
+                            <p class="text-slate-400 text-sm mt-1">International Islamic University Malaysia (IIUM)</p>
+                        </div>
+                        <div class="group interactable">
+                            <h4 class="text-xl font-bold text-white group-hover:text-brand-400 transition">Bachelor of Business Administration (BBA)</h4>
+                            <p class="text-slate-400 text-sm mt-1">Universiti Malaysia Terengganu (UMT)</p>
+                            <p class="text-slate-500 text-xs">Science In Marketing</p>
                         </div>
                     </div>
                 </div>
-                
-                <div>
-                    <h4 class="text-white font-bold mb-4">Sitemap</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#home" class="hover:text-brand-400 transition">Home</a></li>
-                        <li><a href="#about" class="hover:text-brand-400 transition">About</a></li>
-                        <li><a href="#services" class="hover:text-brand-400 transition">Services</a></li>
-                        <li><a href="#blog" class="hover:text-brand-400 transition">Blog</a></li>
-                        <li><a href="#contact" class="hover:text-brand-400 transition">Contact</a></li>
-                    </ul>
-                </div>
 
-                <div>
-                    <h4 class="text-white font-bold mb-4">Legal</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-brand-400 transition">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-brand-400 transition">Terms of Service</a></li>
-                        <li><a href="#" class="hover:text-brand-400 transition">Cookie Policy</a></li>
-                    </ul>
+                <!-- Certifications Grid -->
+                <div class="reveal">
+                    <h3 class="text-2xl font-bold text-white mb-8 border-l-4 border-brand-500 pl-4">Certifications & Awards</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-dark-950 p-4 rounded-xl border border-white/5 hover:border-brand-500/30 transition interactable">
+                            <div class="text-brand-400 font-bold text-xs uppercase mb-2">Award</div>
+                            <div class="text-white text-sm font-bold">Academic Dean's Award</div>
+                            <div class="text-slate-500 text-xs mt-1">UMT</div>
+                        </div>
+                        <div class="bg-dark-950 p-4 rounded-xl border border-white/5 hover:border-brand-500/30 transition interactable">
+                            <div class="text-blue-400 font-bold text-xs uppercase mb-2">Security</div>
+                            <div class="text-white text-sm font-bold">Next Gen Cyber Warrior</div>
+                            <div class="text-slate-500 text-xs mt-1">Melbourne Security Associates</div>
+                        </div>
+                        <div class="bg-dark-950 p-4 rounded-xl border border-white/5 hover:border-brand-500/30 transition interactable">
+                            <div class="text-purple-400 font-bold text-xs uppercase mb-2">Training</div>
+                            <div class="text-white text-sm font-bold">Training for Trainers</div>
+                            <div class="text-slate-500 text-xs mt-1">Mentoring for Life (IIUM)</div>
+                        </div>
+                        <div class="bg-dark-950 p-4 rounded-xl border border-white/5 hover:border-brand-500/30 transition interactable">
+                            <div class="text-green-400 font-bold text-xs uppercase mb-2">Leadership</div>
+                            <div class="text-white text-sm font-bold">HIKMAH For Young Leaders</div>
+                            <div class="text-slate-500 text-xs mt-1">Influence With Purpose</div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <section id="contact" class="py-24 relative overflow-hidden bg-dark-950">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
+            <h2 class="text-4xl md:text-6xl font-serif font-bold text-white mb-8">Ready to Scale?</h2>
+            <div class="flex flex-col md:flex-row justify-center gap-6 mb-16">
+                 <a href="mailto:jannatulferdauskana@gmail.com" class="interactable flex items-center justify-center gap-3 px-8 py-4 bg-brand-600 rounded-full text-white font-bold hover:bg-brand-500 transition shadow-lg shadow-brand-500/25">
+                    <i class="fas fa-envelope"></i> jannatulferdauskana@gmail.com
+                 </a>
+                 <a href="#" class="interactable flex items-center justify-center gap-3 px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-bold hover:bg-white/10 transition">
+                    <i class="fas fa-phone"></i> +60 103361664
+                 </a>
             </div>
             
-            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center">
-                <div class="text-xs text-slate-600">
-                    &copy; <script>document.write(new Date().getFullYear())</script> Jannatul Ferdous Kana. All Rights Reserved.
-                </div>
-                <div class="flex space-x-6 mt-4 md:mt-0">
-                    <i class="fab fa-cc-visa text-2xl text-slate-600"></i>
-                    <i class="fab fa-cc-mastercard text-2xl text-slate-600"></i>
-                    <i class="fab fa-cc-paypal text-2xl text-slate-600"></i>
-                </div>
+            <div class="flex justify-center gap-8 mb-8">
+                <a href="https://linkedin.com/in/jannatul-ferdaus-kana-2500b1225/" class="text-slate-500 hover:text-white transition text-2xl interactable"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="text-slate-500 hover:text-white transition text-2xl interactable"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-slate-500 hover:text-white transition text-2xl interactable"><i class="fab fa-instagram"></i></a>
             </div>
+            
+            <p class="text-slate-600 text-xs uppercase tracking-widest">&copy; 2025 Jannatul Ferdous Kana. All Rights Reserved.</p>
         </div>
-    </footer>
+    </section>
 
     <!-- Scripts -->
     <script>
-        // --- 1. Refined Audio Engine ---
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        let soundEnabled = true;
-        const notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25]; // C Maj
-        let noteIndex = 0;
-
-        function playPianoNote() {
-            if (!soundEnabled || audioCtx.state === 'suspended') {
-                audioCtx.resume().catch(e => console.log(e));
-                if(!soundEnabled) return;
-            }
-
-            const oscillator = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-
-            oscillator.type = 'sine'; // Sine is smoother/more "glassy" for this dark theme
-            
-            // Randomize note slightly for more organic feel
-            const freq = notes[Math.floor(Math.random() * notes.length)];
-            
-            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-            // Lower volume for subtlety
-            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-            gainNode.gain.linearRampToValueAtTime(0.03, audioCtx.currentTime + 0.05); // Very quiet
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2); // Long tail reverb feel
-
-            oscillator.connect(gainNode);
-            gainNode.connect(audioCtx.destination);
-
-            oscillator.start();
-            oscillator.stop(audioCtx.currentTime + 2);
-        }
-
-        const toggleBtn = document.getElementById('sound-toggle');
-        const toggleIcon = toggleBtn.querySelector('i');
-        
-        toggleBtn.addEventListener('click', () => {
-            soundEnabled = !soundEnabled;
-            if (soundEnabled) {
-                toggleIcon.className = 'fas fa-volume-up text-lg group-hover:animate-pulse';
-                toggleBtn.classList.remove('opacity-50');
-            } else {
-                toggleIcon.className = 'fas fa-volume-mute text-lg';
-                toggleBtn.classList.add('opacity-50');
-            }
+        // --- Spotlight Effect ---
+        const spotlight = document.querySelector('.spotlight');
+        window.addEventListener('mousemove', e => {
+            spotlight.style.setProperty('--x', `${e.clientX}px`);
+            spotlight.style.setProperty('--y', `${e.clientY}px`);
         });
 
-        // --- 2. Cursor Logic ---
+        // --- Custom Cursor ---
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
         
@@ -766,7 +596,6 @@
             const posY = e.clientY;
             cursorDot.style.left = `${posX}px`;
             cursorDot.style.top = `${posY}px`;
-            
             cursorOutline.animate({
                 left: `${posX}px`,
                 top: `${posY}px`
@@ -777,14 +606,13 @@
         interactables.forEach(el => {
             el.addEventListener('mouseenter', () => {
                 document.body.classList.add('hovering');
-                playPianoNote();
             });
             el.addEventListener('mouseleave', () => {
                 document.body.classList.remove('hovering');
             });
         });
 
-        // --- 3. Scroll Reveal Animation ---
+        // --- Scroll Reveal ---
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -797,25 +625,22 @@
             }
         }
         window.addEventListener("scroll", reveal);
-        // Trigger once on load
         reveal();
-
-        // --- 4. Mobile Menu ---
+        
+        // --- Mobile Menu ---
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
         btn.addEventListener('click', () => {
             menu.classList.toggle('hidden');
         });
         
-        // --- 5. Navbar Glass Effect ---
+        // --- Navbar Scroll ---
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 20) {
-                navbar.classList.add('shadow-lg');
-                navbar.style.borderBottom = '1px solid rgba(255,255,255,0.1)';
+            if (window.scrollY > 50) {
+                navbar.classList.add('border-b', 'border-white/10');
             } else {
-                navbar.classList.remove('shadow-lg');
-                navbar.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+                navbar.classList.remove('border-b', 'border-white/10');
             }
         });
     </script>
