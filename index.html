@@ -3,28 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jannatul Ferdous Kana | Digital Marketer</title>
+    <title>Jannatul Ferdous Kana | Strategic Digital Marketer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
                         brand: {
-                            50: '#f5f3ff', // Light Violet
+                            50: '#f5f3ff',
                             100: '#ede9fe',
                             200: '#ddd6fe',
                             300: '#c4b5fd',
                             400: '#a78bfa',
-                            500: '#8b5cf6', // Primary Purple
-                            600: '#7c3aed', // Darker Purple
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
                             700: '#6d28d9',
                             800: '#5b21b6',
-                            900: '#4c1d95', // Deepest Purple
-                            950: '#2e1065',
+                            900: '#4c1d95',
+                            950: '#2e1065', // Deep purple base
                         },
-                        accent: '#ec4899', // Pink accent
+                        dark: {
+                            900: '#0f0720', // Almost black purple
+                            800: '#1a1033',
+                            700: '#2d1b4e',
+                        },
+                        accent: '#f43f5e',
                     },
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
@@ -32,93 +38,125 @@
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
-                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 12s linear infinite',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-20px)' },
                         }
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                     }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;700&display=swap');
         
-        /* Custom Cursor Styles */
+        /* --- Base & Scrollbar --- */
         body {
-            cursor: none; /* Hide default cursor */
+            cursor: none;
+            background-color: #0f0720; /* Brand Dark 900 */
+            color: #e2e8f0;
         }
-        
-        .cursor-dot,
-        .cursor-outline {
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f0720;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4c1d95;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #7c3aed;
+        }
+
+        /* --- Custom Cursor --- */
+        .cursor-dot, .cursor-outline {
             position: fixed;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             transform: translate(-50%, -50%);
             border-radius: 50%;
             z-index: 9999;
             pointer-events: none;
         }
-
         .cursor-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #7c3aed; /* Brand 600 */
+            width: 8px; height: 8px;
+            background-color: #a78bfa;
+            box-shadow: 0 0 10px #a78bfa;
         }
-
         .cursor-outline {
-            width: 40px;
-            height: 40px;
-            border: 1px solid rgba(124, 58, 237, 0.5);
+            width: 40px; height: 40px;
+            border: 1px solid rgba(167, 139, 250, 0.3);
             transition: width 0.2s, height 0.2s, background-color 0.2s;
         }
-
-        /* Hover effect for cursor */
         body.hovering .cursor-outline {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(124, 58, 237, 0.1);
-            border-color: transparent;
+            width: 70px; height: 70px;
+            background-color: rgba(167, 139, 250, 0.05);
+            border-color: #a78bfa;
         }
-
-        /* Glassmorphism */
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.3);
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        /* Smooth Text Selection */
-        ::selection {
-            background: #8b5cf6;
-            color: white;
-        }
-
-        /* Hide cursor on mobile */
         @media (max-width: 768px) {
             body { cursor: auto; }
             .cursor-dot, .cursor-outline { display: none; }
         }
+
+        /* --- Glassmorphism & Effects --- */
+        .glass-nav {
+            background: rgba(15, 7, 32, 0.8);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(124, 58, 237, 0.5); /* Brand 600 */
+            box-shadow: 0 0 30px rgba(124, 58, 237, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+
+        /* --- Scroll Reveal Animation --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Blog Card Image Zoom --- */
+        .blog-card:hover img {
+            transform: scale(1.05);
+        }
     </style>
 </head>
-<body class="font-sans text-slate-800 antialiased bg-slate-50 overflow-x-hidden selection:bg-brand-200">
+<body class="antialiased overflow-x-hidden selection:bg-brand-500 selection:text-white">
 
-    <!-- Custom Cursor Elements -->
+    <!-- Custom Cursor -->
     <div class="cursor-dot hidden md:block"></div>
     <div class="cursor-outline hidden md:block"></div>
 
     <!-- Audio Toggle -->
-    <button id="sound-toggle" class="fixed bottom-6 right-6 z-50 bg-white p-3 rounded-full shadow-lg border border-slate-200 text-brand-600 hover:scale-110 transition-transform duration-300 group interactable" aria-label="Toggle Sound">
-        <i class="fas fa-volume-up text-xl group-hover:animate-pulse"></i>
+    <button id="sound-toggle" class="fixed bottom-6 right-6 z-50 glass-card w-12 h-12 rounded-full flex items-center justify-center text-brand-300 hover:text-white transition-colors group interactable" aria-label="Toggle Sound">
+        <i class="fas fa-volume-up text-lg group-hover:animate-pulse"></i>
     </button>
 
     <!-- Navigation -->
@@ -127,25 +165,26 @@
             <div class="flex justify-between items-center h-24">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center interactable">
-                    <a href="#" class="text-3xl font-serif font-bold text-brand-950 tracking-tight">
-                        Jannatul<span class="text-brand-600 text-4xl">.</span>
+                    <a href="#" class="text-3xl font-serif font-bold text-white tracking-tight">
+                        Jannatul<span class="text-brand-500 text-4xl">.</span>
                     </a>
                 </div>
                 
                 <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-8 items-center">
-                    <a href="#home" class="interactable text-slate-600 hover:text-brand-600 font-medium transition text-sm uppercase tracking-wide">Home</a>
-                    <a href="#about" class="interactable text-slate-600 hover:text-brand-600 font-medium transition text-sm uppercase tracking-wide">About</a>
-                    <a href="#services" class="interactable text-slate-600 hover:text-brand-600 font-medium transition text-sm uppercase tracking-wide">Services</a>
-                    <a href="#portfolio" class="interactable text-slate-600 hover:text-brand-600 font-medium transition text-sm uppercase tracking-wide">Portfolio</a>
-                    <a href="#contact" class="interactable px-6 py-3 bg-brand-900 text-white font-medium rounded-full hover:bg-brand-800 transition shadow-lg shadow-brand-900/20 transform hover:-translate-y-0.5">
+                <div class="hidden md:flex space-x-10 items-center">
+                    <a href="#home" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">Home</a>
+                    <a href="#about" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">About</a>
+                    <a href="#process" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">Process</a>
+                    <a href="#portfolio" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">Work</a>
+                    <a href="#blog" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">Blog</a>
+                    <a href="#contact" class="interactable px-7 py-3 bg-gradient-to-r from-brand-600 to-brand-800 text-white font-medium rounded-full hover:shadow-[0_0_20px_rgba(124,58,237,0.5)] transition transform hover:-translate-y-0.5 border border-white/10">
                         Let's Talk
                     </a>
                 </div>
 
                 <!-- Mobile menu button -->
                 <div class="md:hidden flex items-center interactable">
-                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-brand-600 focus:outline-none p-2">
+                    <button id="mobile-menu-btn" class="text-slate-300 hover:text-white focus:outline-none p-2">
                         <i class="fas fa-bars text-2xl"></i>
                     </button>
                 </div>
@@ -153,101 +192,298 @@
         </div>
 
         <!-- Mobile Menu Panel -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 absolute w-full shadow-xl">
-            <div class="px-4 pt-2 pb-6 space-y-1">
-                <a href="#home" class="block px-3 py-3 text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-md font-medium interactable">Home</a>
-                <a href="#about" class="block px-3 py-3 text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-md font-medium interactable">About</a>
-                <a href="#services" class="block px-3 py-3 text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-md font-medium interactable">Services</a>
-                <a href="#portfolio" class="block px-3 py-3 text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-md font-medium interactable">Portfolio</a>
-                <a href="#contact" class="block px-3 py-3 text-brand-600 font-semibold interactable">Contact Me</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-dark-900/95 backdrop-blur-xl border-t border-white/5 absolute w-full shadow-2xl">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#home" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">Home</a>
+                <a href="#about" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">About</a>
+                <a href="#process" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">Process</a>
+                <a href="#portfolio" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">Portfolio</a>
+                <a href="#blog" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">Insights</a>
+                <a href="#contact" class="block px-3 py-3 text-brand-400 font-semibold interactable">Contact Me</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
-        <!-- Background Gradients -->
-        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-brand-200 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-pulse-slow"></div>
-        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-[500px] h-[500px] bg-purple-200 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-pulse-slow"></div>
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <!-- Dynamic Background -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-600/20 rounded-full mix-blend-screen filter blur-[120px] animate-pulse-slow"></div>
+            <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full mix-blend-screen filter blur-[100px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+            <!-- Grid Pattern -->
+            <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+        </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col lg:flex-row items-center gap-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
                 
-                <div class="lg:w-1/2 text-center lg:text-left">
-                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-white border border-brand-100 text-brand-700 text-sm font-semibold mb-8 shadow-sm interactable animate-fade-in-up">
-                        <span class="relative flex h-3 w-3 mr-2">
+                <div class="lg:w-1/2 text-center lg:text-left reveal active">
+                    <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-300 text-sm font-semibold mb-8 backdrop-blur-sm interactable">
+                        <span class="flex h-2 w-2 relative mr-3">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-500"></span>
+                            <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-400"></span>
                         </span>
-                        Open for collaborations
+                        Accepting New Projects for 2025
                     </div>
                     
-                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-900 tracking-tight mb-6 leading-[1.1] font-serif">
-                        Digital Marketing <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-accent">Reimagined.</span>
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-8 leading-[1.1] font-serif">
+                        Transforming Data into <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-brand-200 to-white text-glow">Digital Dominance.</span>
                     </h1>
                     
-                    <p class="text-lg sm:text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light">
-                        Hello, I'm <span class="font-semibold text-brand-700">Jannatul Ferdous Kana</span>. I craft data-driven digital strategies that resonate with audiences and deliver measurable ROI.
+                    <p class="text-lg text-slate-400 mb-12 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light">
+                        I am <span class="text-white font-medium">Jannatul Ferdous Kana</span>. A strategic digital marketer blending creative storytelling with rigorous analytics to scale brands in the modern web.
                     </p>
                     
-                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-5">
-                        <a href="#contact" class="interactable group px-8 py-4 bg-brand-900 text-white rounded-full font-semibold hover:bg-brand-800 transition shadow-xl shadow-brand-900/20 flex items-center justify-center">
-                            Start a Project
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-6">
+                        <a href="#contact" class="interactable group px-8 py-4 bg-white text-brand-950 rounded-full font-bold hover:bg-brand-50 transition shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center justify-center">
+                            Start Scaling
                             <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </a>
-                        <a href="#portfolio" class="interactable px-8 py-4 bg-white text-slate-700 border border-slate-200 rounded-full font-semibold hover:bg-slate-50 hover:border-brand-200 transition shadow-sm flex items-center justify-center">
-                            <i class="fas fa-play mr-2 text-xs text-brand-500"></i> View Work
+                        <a href="#portfolio" class="interactable px-8 py-4 bg-transparent border border-slate-600 text-white rounded-full font-semibold hover:border-brand-400 hover:bg-brand-500/10 transition flex items-center justify-center">
+                            View Case Studies
                         </a>
                     </div>
                     
-                    <div class="mt-12 flex items-center justify-center lg:justify-start space-x-8 text-slate-400">
-                        <i class="fab fa-google text-2xl hover:text-slate-600 transition interactable" title="Google Ads Certified"></i>
-                        <i class="fab fa-meta text-2xl hover:text-slate-600 transition interactable" title="Meta Certified"></i>
-                        <i class="fab fa-hubspot text-2xl hover:text-slate-600 transition interactable" title="HubSpot Certified"></i>
-                        <div class="h-8 w-px bg-slate-200"></div>
-                        <span class="text-sm font-medium text-slate-500">Certified Professional</span>
+                    <!-- Stats Strip -->
+                    <div class="mt-16 pt-8 border-t border-white/5 flex justify-center lg:justify-start gap-12 text-center lg:text-left">
+                        <div>
+                            <div class="text-3xl font-bold text-white font-serif">5+</div>
+                            <div class="text-xs text-slate-500 uppercase tracking-widest mt-1">Years Exp.</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-white font-serif">120%</div>
+                            <div class="text-xs text-slate-500 uppercase tracking-widest mt-1">Avg ROI</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-white font-serif">40+</div>
+                            <div class="text-xs text-slate-500 uppercase tracking-widest mt-1">Brands</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="lg:w-1/2 relative lg:h-[600px] w-full flex items-center justify-center">
-                    <!-- Abstract geometric shape background -->
-                    <div class="absolute inset-0 bg-gradient-to-tr from-brand-100 to-transparent rounded-full opacity-30 blur-3xl transform rotate-12"></div>
-                    
-                    <div class="relative w-full max-w-md mx-auto animate-float">
-                        <div class="relative z-10 rounded-[2rem] overflow-hidden shadow-2xl border-[8px] border-white/50 aspect-[4/5]">
-                             <div class="absolute inset-0 bg-slate-200 flex items-center justify-center">
-                                <div class="text-center text-slate-400">
-                                    <i class="fas fa-user-astronaut text-8xl mb-4 text-brand-200"></i>
-                                    <p class="font-medium font-serif italic">Insert Portrait Here</p>
-                                </div>
-                             </div>
-                             <!-- Glass Overlay at bottom -->
-                             <div class="absolute bottom-0 left-0 right-0 bg-white/10 backdrop-blur-md border-t border-white/20 p-6">
-                                <p class="text-white font-serif text-xl">Jannatul F. Kana</p>
-                                <p class="text-brand-100 text-sm">Senior Strategist</p>
+                <!-- Abstract Visual -->
+                <div class="lg:w-1/2 relative lg:h-[700px] w-full flex items-center justify-center reveal">
+                    <div class="relative w-full max-w-lg aspect-square">
+                        <!-- Orbit Rings -->
+                        <div class="absolute inset-0 border border-brand-500/20 rounded-full animate-spin-slow"></div>
+                        <div class="absolute inset-10 border border-brand-500/10 rounded-full animate-spin-slow" style="animation-direction: reverse;"></div>
+                        
+                        <!-- Central Image Container -->
+                        <div class="absolute inset-20 rounded-full overflow-hidden border-2 border-white/10 shadow-[0_0_50px_rgba(124,58,237,0.2)] animate-float bg-dark-800">
+                             <!-- Placeholder Image -->
+                             <div class="w-full h-full bg-gradient-to-br from-brand-900 to-slate-900 flex flex-col items-center justify-center text-slate-500 group interactable">
+                                <i class="fas fa-user-circle text-8xl mb-4 text-brand-500/50 group-hover:text-brand-400 transition-colors"></i>
+                                <span class="font-serif italic text-white/50">Jannatul F. Kana</span>
                              </div>
                         </div>
 
-                        <!-- Floating Badge 1 -->
-                        <div class="absolute -right-8 top-12 bg-white p-4 rounded-xl shadow-lg animate-bounce duration-[3000ms] interactable">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-green-100 p-2 rounded-full text-green-600"><i class="fas fa-chart-line"></i></div>
-                                <div>
-                                    <p class="text-xs text-slate-500">ROI Increase</p>
-                                    <p class="font-bold text-slate-800">+150%</p>
-                                </div>
-                            </div>
+                        <!-- Floating Glass Cards -->
+                        <div class="absolute top-20 right-0 glass-card p-4 rounded-xl animate-float interactable" style="animation-delay: 1s;">
+                            <i class="fab fa-google text-2xl text-white mb-1"></i>
+                            <div class="text-xs text-brand-200">Ads Certified</div>
                         </div>
                         
-                        <!-- Floating Badge 2 -->
-                        <div class="absolute -left-8 bottom-20 bg-white p-4 rounded-xl shadow-lg animate-pulse-slow interactable">
-                            <div class="flex items-center gap-3">
-                                <div class="bg-brand-100 p-2 rounded-full text-brand-600"><i class="fas fa-users"></i></div>
+                        <div class="absolute bottom-32 left-0 glass-card p-4 rounded-xl animate-float interactable" style="animation-delay: 2s;">
+                            <i class="fas fa-chart-line text-2xl text-green-400 mb-1"></i>
+                            <div class="text-xs text-brand-200">Growth Expert</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section (New) -->
+    <section id="process" class="py-24 relative bg-dark-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20 reveal">
+                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">Methodology</span>
+                <h2 class="text-4xl lg:text-5xl font-serif font-bold text-white">How I Drive Results</h2>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8 relative">
+                <!-- Connector Line (Desktop) -->
+                <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-brand-900 via-brand-500 to-brand-900 opacity-30"></div>
+
+                <!-- Step 1 -->
+                <div class="relative text-center reveal interactable" style="transition-delay: 100ms;">
+                    <div class="w-24 h-24 mx-auto bg-dark-800 border border-brand-500/30 rounded-full flex items-center justify-center text-3xl text-brand-400 mb-6 relative z-10 shadow-[0_0_30px_rgba(124,58,237,0.1)] group hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Discovery</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Auditing current assets, competitor analysis, and defining clear KPIs.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative text-center reveal interactable" style="transition-delay: 200ms;">
+                    <div class="w-24 h-24 mx-auto bg-dark-800 border border-brand-500/30 rounded-full flex items-center justify-center text-3xl text-brand-400 mb-6 relative z-10 shadow-[0_0_30px_rgba(124,58,237,0.1)] group hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-chess-knight"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Strategy</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Crafting a bespoke roadmap covering SEO, Content, and Paid Media channels.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative text-center reveal interactable" style="transition-delay: 300ms;">
+                    <div class="w-24 h-24 mx-auto bg-dark-800 border border-brand-500/30 rounded-full flex items-center justify-center text-3xl text-brand-400 mb-6 relative z-10 shadow-[0_0_30px_rgba(124,58,237,0.1)] group hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Execution</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Implementation of campaigns with continuous A/B testing and optimization.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative text-center reveal interactable" style="transition-delay: 400ms;">
+                    <div class="w-24 h-24 mx-auto bg-dark-800 border border-brand-500/30 rounded-full flex items-center justify-center text-3xl text-brand-400 mb-6 relative z-10 shadow-[0_0_30px_rgba(124,58,237,0.1)] group hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Analytics</h3>
+                    <p class="text-sm text-slate-400 leading-relaxed">Deep-dive reporting on ROI and strategic adjustments for scaling.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute right-0 top-1/3 w-96 h-96 bg-brand-900/30 rounded-full mix-blend-screen filter blur-[80px]"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
+                <div>
+                    <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">Expertise</span>
+                    <h2 class="text-4xl lg:text-5xl font-serif font-bold text-white">Advanced Solutions</h2>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Service Card 1 -->
+                <div class="glass-card p-8 rounded-2xl interactable reveal group">
+                    <div class="w-14 h-14 bg-brand-500/10 rounded-lg flex items-center justify-center text-brand-400 text-2xl mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Technical SEO</h3>
+                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">Going beyond keywords. I optimize site architecture, core web vitals, and schema markup to dominate SERPs.</p>
+                    <ul class="text-xs text-slate-500 space-y-2 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Audit & Fixes</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> On-Page Optimization</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Backlink Strategy</li>
+                    </ul>
+                </div>
+
+                <!-- Service Card 2 -->
+                <div class="glass-card p-8 rounded-2xl interactable reveal group" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 bg-brand-500/10 rounded-lg flex items-center justify-center text-brand-400 text-2xl mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Performance Marketing</h3>
+                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">Data-backed paid campaigns on Meta & Google. I focus on reducing CPA while scaling ad spend profitably.</p>
+                    <ul class="text-xs text-slate-500 space-y-2 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Audience Segmentation</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Retargeting Funnels</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Creative Testing</li>
+                    </ul>
+                </div>
+
+                <!-- Service Card 3 -->
+                <div class="glass-card p-8 rounded-2xl interactable reveal group" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 bg-brand-500/10 rounded-lg flex items-center justify-center text-brand-400 text-2xl mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                        <i class="fas fa-pen-nib"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Content Strategy</h3>
+                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">Building authority through valuable content. From blog posts to video scripts, I align content with user intent.</p>
+                    <ul class="text-xs text-slate-500 space-y-2 mb-6">
+                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Content Calendar</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> E-E-A-T Compliance</li>
+                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Email Newsletters</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Work Section -->
+    <section id="portfolio" class="py-24 bg-dark-800 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
+                <div>
+                    <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">Selected Works</span>
+                    <h2 class="text-4xl lg:text-5xl font-serif font-bold text-white">Case Studies</h2>
+                </div>
+                <a href="#" class="interactable mt-6 md:mt-0 text-brand-300 hover:text-white text-sm font-semibold tracking-widest uppercase border-b border-brand-500 pb-1 hover:border-white transition">View All Projects</a>
+            </div>
+
+            <div class="space-y-20">
+                <!-- Project 1 -->
+                <div class="group relative grid md:grid-cols-12 gap-8 items-center reveal interactable">
+                    <div class="md:col-span-7 relative z-10">
+                        <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/5 relative">
+                            <div class="absolute inset-0 bg-gradient-to-tr from-brand-900 to-slate-800 group-hover:scale-105 transition-transform duration-700"></div>
+                            <!-- Mock UI -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-shopping-bag text-6xl text-white/10 group-hover:text-brand-400/20 transition-colors"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-5 md:-ml-12 relative z-20">
+                        <div class="glass-card p-8 rounded-2xl shadow-xl">
+                            <div class="text-brand-400 text-xs font-bold uppercase tracking-widest mb-3">E-Commerce • Fashion</div>
+                            <h3 class="text-3xl font-serif font-bold text-white mb-4">Velvet & Vogue</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                                A complete digital overhaul for a luxury fashion retailer. We implemented a multi-channel funnel strategy that utilized Instagram Reels for top-of-funnel awareness and email flows for retention.
+                            </p>
+                            <div class="flex gap-4 mb-6">
+                                <div class="bg-brand-500/10 px-3 py-1 rounded text-xs text-brand-300">Shopify</div>
+                                <div class="bg-brand-500/10 px-3 py-1 rounded text-xs text-brand-300">Klaviyo</div>
+                                <div class="bg-brand-500/10 px-3 py-1 rounded text-xs text-brand-300">Meta Ads</div>
+                            </div>
+                            <div class="flex items-center gap-6">
                                 <div>
-                                    <p class="text-xs text-slate-500">Reach</p>
-                                    <p class="font-bold text-slate-800">1M+</p>
+                                    <span class="block text-2xl font-bold text-white">3.5x</span>
+                                    <span class="text-xs text-slate-500 uppercase">ROAS</span>
                                 </div>
+                                <div>
+                                    <span class="block text-2xl font-bold text-white">+200%</span>
+                                    <span class="text-xs text-slate-500 uppercase">Traffic</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="group relative grid md:grid-cols-12 gap-8 items-center reveal interactable">
+                    <div class="md:col-span-5 md:order-1 order-2 relative z-20 md:-mr-12">
+                         <div class="glass-card p-8 rounded-2xl shadow-xl md:text-right">
+                            <div class="text-brand-400 text-xs font-bold uppercase tracking-widest mb-3">SaaS • B2B</div>
+                            <h3 class="text-3xl font-serif font-bold text-white mb-4">DataFlow Systems</h3>
+                            <p class="text-slate-400 text-sm mb-6 leading-relaxed">
+                                Generated high-quality leads for an enterprise software solution. The strategy focused heavily on LinkedIn thought leadership and gated whitepaper assets to capture decision-maker emails.
+                            </p>
+                            <div class="flex gap-4 mb-6 md:justify-end">
+                                <div class="bg-brand-500/10 px-3 py-1 rounded text-xs text-brand-300">LinkedIn</div>
+                                <div class="bg-brand-500/10 px-3 py-1 rounded text-xs text-brand-300">HubSpot</div>
+                                <div class="bg-brand-500/10 px-3 py-1 rounded text-xs text-brand-300">SEO</div>
+                            </div>
+                             <div class="flex items-center gap-6 md:justify-end">
+                                <div>
+                                    <span class="block text-2xl font-bold text-white">450+</span>
+                                    <span class="text-xs text-slate-500 uppercase">SQLs Generated</span>
+                                </div>
+                                <div>
+                                    <span class="block text-2xl font-bold text-white">-40%</span>
+                                    <span class="text-xs text-slate-500 uppercase">CPA</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:col-span-7 md:order-2 order-1 relative z-10">
+                        <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/5 relative">
+                            <div class="absolute inset-0 bg-gradient-to-tl from-blue-900 to-dark-800 group-hover:scale-105 transition-transform duration-700"></div>
+                             <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-server text-6xl text-white/10 group-hover:text-brand-400/20 transition-colors"></i>
                             </div>
                         </div>
                     </div>
@@ -256,197 +492,144 @@
         </div>
     </section>
 
-    <!-- Services Section (Glassmorphism) -->
-    <section id="services" class="py-24 bg-white relative">
+    <!-- New: Blog Section -->
+    <section id="blog" class="py-24 relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-20">
-                <span class="text-brand-600 font-bold tracking-widest uppercase text-xs mb-3 block">Expertise</span>
-                <h2 class="text-4xl lg:text-5xl font-serif font-bold text-slate-900 mb-6">Holistic Digital Solutions</h2>
-                <div class="h-1 w-20 bg-brand-500 mx-auto rounded-full"></div>
+            <div class="text-center mb-20 reveal">
+                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">Thought Leadership</span>
+                <h2 class="text-4xl lg:text-5xl font-serif font-bold text-white">Latest Insights</h2>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Service 1 -->
-                <div class="group interactable p-8 rounded-3xl bg-slate-50 hover:bg-brand-900 hover:text-white transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-100">
-                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-brand-600 text-3xl mb-8 shadow-sm group-hover:bg-white/10 group-hover:text-white transition-colors">
-                        <i class="fas fa-search-location"></i>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Blog 1 -->
+                <article class="blog-card group interactable reveal cursor-pointer">
+                    <div class="aspect-[4/3] rounded-2xl overflow-hidden mb-6 relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent z-10 opacity-60"></div>
+                        <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="SEO" class="w-full h-full object-cover transition-transform duration-700">
+                        <div class="absolute top-4 left-4 z-20 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider">SEO</div>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 font-serif">Advanced SEO</h3>
-                    <p class="text-slate-600 mb-6 group-hover:text-brand-100">Dominate search results with technical SEO, schema markup, and high-intent keyword strategies.</p>
-                    <a href="#contact" class="inline-flex items-center font-semibold text-brand-600 group-hover:text-white transition-colors">
-                        Learn more <i class="fas fa-arrow-right ml-2 text-xs"></i>
-                    </a>
-                </div>
+                    <div class="text-xs text-slate-500 mb-2">Oct 24, 2024 • 5 min read</div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-brand-400 transition-colors">The Death of Third-Party Cookies: What Next?</h3>
+                    <p class="text-slate-400 text-sm mb-4 line-clamp-3">Google is phasing out cookies. Here is how marketers need to pivot towards first-party data strategies to maintain targeting precision.</p>
+                    <span class="text-brand-400 text-sm font-bold flex items-center group-hover:translate-x-2 transition-transform">Read Article <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
+                </article>
 
-                <!-- Service 2 -->
-                <div class="group interactable p-8 rounded-3xl bg-slate-50 hover:bg-brand-900 hover:text-white transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-100">
-                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-accent text-3xl mb-8 shadow-sm group-hover:bg-white/10 group-hover:text-white transition-colors">
-                        <i class="fab fa-instagram"></i>
+                <!-- Blog 2 -->
+                <article class="blog-card group interactable reveal cursor-pointer" style="transition-delay: 100ms;">
+                    <div class="aspect-[4/3] rounded-2xl overflow-hidden mb-6 relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent z-10 opacity-60"></div>
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Social Media" class="w-full h-full object-cover transition-transform duration-700">
+                        <div class="absolute top-4 left-4 z-20 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider">Social</div>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 font-serif">Social Growth</h3>
-                    <p class="text-slate-600 mb-6 group-hover:text-brand-100">Organic community building and viral content creation across Instagram, TikTok, and LinkedIn.</p>
-                    <a href="#contact" class="inline-flex items-center font-semibold text-brand-600 group-hover:text-white transition-colors">
-                        Learn more <i class="fas fa-arrow-right ml-2 text-xs"></i>
-                    </a>
-                </div>
+                    <div class="text-xs text-slate-500 mb-2">Nov 02, 2024 • 4 min read</div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-brand-400 transition-colors">Viral is Vanity: Building Sustainable Communities</h3>
+                    <p class="text-slate-400 text-sm mb-4 line-clamp-3">Why chasing the viral trend often leads to low-quality followers, and how to build a tribe that actually buys your product.</p>
+                    <span class="text-brand-400 text-sm font-bold flex items-center group-hover:translate-x-2 transition-transform">Read Article <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
+                </article>
 
-                <!-- Service 3 -->
-                <div class="group interactable p-8 rounded-3xl bg-slate-50 hover:bg-brand-900 hover:text-white transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-100">
-                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-orange-500 text-3xl mb-8 shadow-sm group-hover:bg-white/10 group-hover:text-white transition-colors">
-                        <i class="fas fa-bullseye"></i>
+                <!-- Blog 3 -->
+                <article class="blog-card group interactable reveal cursor-pointer" style="transition-delay: 200ms;">
+                    <div class="aspect-[4/3] rounded-2xl overflow-hidden mb-6 relative">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent z-10 opacity-60"></div>
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Analytics" class="w-full h-full object-cover transition-transform duration-700">
+                        <div class="absolute top-4 left-4 z-20 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider">Analytics</div>
                     </div>
-                    <h3 class="text-2xl font-bold mb-4 font-serif">Precision Ads</h3>
-                    <p class="text-slate-600 mb-6 group-hover:text-brand-100">High-conversion PPC campaigns. We stop the scroll and turn impressions into revenue.</p>
-                    <a href="#contact" class="inline-flex items-center font-semibold text-brand-600 group-hover:text-white transition-colors">
-                        Learn more <i class="fas fa-arrow-right ml-2 text-xs"></i>
-                    </a>
-                </div>
+                    <div class="text-xs text-slate-500 mb-2">Nov 15, 2024 • 8 min read</div>
+                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-brand-400 transition-colors">Understanding GA4: A Marketer's Guide</h3>
+                    <p class="text-slate-400 text-sm mb-4 line-clamp-3">Universal Analytics is gone. This guide breaks down events, parameters, and exploration reports in the new Google Analytics 4.</p>
+                    <span class="text-brand-400 text-sm font-bold flex items-center group-hover:translate-x-2 transition-transform">Read Article <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
+                </article>
             </div>
         </div>
     </section>
 
-    <!-- Portfolio Section with Piano Keys Vibe -->
-    <section id="portfolio" class="py-24 bg-brand-50 relative overflow-hidden">
-        <!-- Decoration -->
-        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-300 to-transparent"></div>
-        
+    <!-- New: Testimonials -->
+    <section class="py-24 bg-dark-800 border-y border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16">
-                <div>
-                    <span class="text-brand-600 font-bold tracking-widest uppercase text-xs mb-3 block">Selected Works</span>
-                    <h2 class="text-4xl lg:text-5xl font-serif font-bold text-slate-900">Featured Case Studies</h2>
-                </div>
-                <a href="#" class="interactable hidden md:inline-flex px-6 py-3 border border-brand-200 rounded-full text-brand-700 font-medium hover:bg-brand-100 transition items-center">
-                    View Full Archive <i class="fas fa-external-link-alt ml-2 text-sm"></i>
-                </a>
-            </div>
-
-            <div class="grid lg:grid-cols-2 gap-10">
-                <!-- Large Project 1 -->
-                <div class="group interactable relative rounded-3xl overflow-hidden shadow-xl aspect-video cursor-pointer">
-                    <div class="absolute inset-0 bg-gradient-to-br from-brand-900 via-purple-800 to-slate-900 transition-transform duration-700 group-hover:scale-105"></div>
-                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
-                    
-                    <!-- Content -->
-                    <div class="absolute bottom-0 left-0 p-8 w-full">
-                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                            <div class="text-brand-200 text-sm font-bold uppercase tracking-wider mb-2">E-Commerce Scaling</div>
-                            <h3 class="text-3xl font-serif text-white font-bold mb-2">Velvet Fashion</h3>
-                            <p class="text-brand-100 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 max-w-md">
-                                A comprehensive rebrand and funnel optimization resulting in 3x ROAS.
-                            </p>
-                        </div>
-                    </div>
-                    
-                    <!-- Icon -->
-                    <div class="absolute top-8 right-8 bg-white/20 backdrop-blur-md p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                        <i class="fas fa-arrow-up-right-from-square"></i>
-                    </div>
-                </div>
-
-                <!-- Large Project 2 -->
-                <div class="group interactable relative rounded-3xl overflow-hidden shadow-xl aspect-video cursor-pointer">
-                    <div class="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-700 to-brand-900 transition-transform duration-700 group-hover:scale-105"></div>
-                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
-                    
-                    <div class="absolute bottom-0 left-0 p-8 w-full">
-                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                            <div class="text-brand-200 text-sm font-bold uppercase tracking-wider mb-2">B2B Lead Gen</div>
-                            <h3 class="text-3xl font-serif text-white font-bold mb-2">TechFlow Solutions</h3>
-                            <p class="text-brand-100 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 max-w-md">
-                                LinkedIn strategy that generated 500+ qualified leads in Q1.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="absolute top-8 right-8 bg-white/20 backdrop-blur-md p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                        <i class="fas fa-arrow-up-right-from-square"></i>
-                    </div>
-                </div>
+            <div class="text-center mb-16 reveal">
+                <i class="fas fa-quote-left text-4xl text-brand-500/30 mb-6"></i>
+                <h2 class="text-3xl lg:text-4xl font-serif font-bold text-white">Clients Speak</h2>
             </div>
             
-            <!-- Smaller grid -->
-            <div class="grid md:grid-cols-3 gap-8 mt-10">
-                 <!-- Mini Project 1 -->
-                 <div class="interactable bg-white p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all border border-slate-100 group">
-                    <div class="h-10 w-10 bg-brand-100 rounded-lg flex items-center justify-center text-brand-600 mb-4 group-hover:bg-brand-600 group-hover:text-white transition-colors">
-                        <i class="fas fa-pen-fancy"></i>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="glass-card p-8 rounded-2xl reveal interactable">
+                    <p class="text-slate-300 italic mb-6 text-lg leading-relaxed">"Jannatul transformed our chaotic ad account into a consistent revenue engine. Her attention to data is unmatched."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-xl text-white mr-4 font-serif font-bold">JD</div>
+                        <div>
+                            <div class="text-white font-bold">John Davis</div>
+                            <div class="text-xs text-brand-400 uppercase">CEO, TechStart</div>
+                        </div>
                     </div>
-                    <h4 class="font-bold text-lg mb-1">Copywriting</h4>
-                    <p class="text-sm text-slate-500">Blog Strategy for SaaS</p>
-                 </div>
-                 
-                 <!-- Mini Project 2 -->
-                 <div class="interactable bg-white p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all border border-slate-100 group">
-                    <div class="h-10 w-10 bg-pink-100 rounded-lg flex items-center justify-center text-pink-600 mb-4 group-hover:bg-pink-600 group-hover:text-white transition-colors">
-                        <i class="fas fa-envelope"></i>
+                </div>
+                <div class="glass-card p-8 rounded-2xl reveal interactable" style="transition-delay: 100ms;">
+                    <p class="text-slate-300 italic mb-6 text-lg leading-relaxed">"We were struggling to get noticed. The SEO and Content strategy she deployed doubled our organic traffic in 4 months."</p>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-xl text-white mr-4 font-serif font-bold">AS</div>
+                        <div>
+                            <div class="text-white font-bold">Sarah Al-Mansour</div>
+                            <div class="text-xs text-brand-400 uppercase">Founder, StyleCo</div>
+                        </div>
                     </div>
-                    <h4 class="font-bold text-lg mb-1">Email Marketing</h4>
-                    <p class="text-sm text-slate-500">Newsletter 45% Open Rate</p>
-                 </div>
-
-                 <!-- Mini Project 3 -->
-                 <div class="interactable bg-white p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all border border-slate-100 group">
-                    <div class="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                        <i class="fas fa-chart-bar"></i>
-                    </div>
-                    <h4 class="font-bold text-lg mb-1">Analytics</h4>
-                    <p class="text-sm text-slate-500">Custom G4 Dashboard Setup</p>
-                 </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-24 bg-white relative">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-brand-900 rounded-[3rem] overflow-hidden shadow-2xl relative">
-                <!-- Abstract BG -->
-                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                <div class="absolute top-0 right-0 w-96 h-96 bg-brand-500 rounded-full mix-blend-overlay filter blur-[100px] opacity-50"></div>
+    <section id="contact" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+        
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="bg-gradient-to-br from-brand-900 to-dark-800 rounded-[3rem] overflow-hidden shadow-2xl border border-white/10">
                 
-                <div class="grid lg:grid-cols-2 gap-0 relative z-10">
-                    <div class="p-12 lg:p-16 flex flex-col justify-between text-white">
+                <div class="grid lg:grid-cols-2 gap-0">
+                    <!-- Text Side -->
+                    <div class="p-12 lg:p-16 flex flex-col justify-between text-white relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-500 rounded-full mix-blend-overlay filter blur-[80px] opacity-40"></div>
+                        
                         <div>
-                            <h2 class="text-4xl font-serif font-bold mb-6">Let's build something extraordinary.</h2>
-                            <p class="text-brand-100 text-lg mb-8">Ready to take your digital presence to the next level? I'm currently accepting new projects.</p>
+                            <h2 class="text-4xl font-serif font-bold mb-6">Let's build your legacy.</h2>
+                            <p class="text-brand-100 text-lg mb-8 font-light">Your brand deserves a strategy as unique as your vision. Send me a message and let's start the conversation.</p>
                             
-                            <div class="space-y-4">
-                                <a href="mailto:hello@jannatul.com" class="interactable flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition">
-                                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><i class="fas fa-envelope"></i></div>
-                                    <span>hello@jannatul.com</span>
+                            <div class="space-y-6">
+                                <a href="mailto:hello@jannatul.com" class="interactable flex items-center space-x-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition border border-white/5">
+                                    <div class="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center text-white"><i class="fas fa-envelope"></i></div>
+                                    <span class="font-medium">hello@jannatul.com</span>
                                 </a>
-                                <a href="tel:+880123456789" class="interactable flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition">
-                                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><i class="fas fa-phone"></i></div>
-                                    <span>+880 1234 567890</span>
-                                </a>
+                                <div class="interactable flex items-center space-x-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition border border-white/5">
+                                    <div class="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center text-white"><i class="fas fa-map-marker-alt"></i></div>
+                                    <span class="font-medium">Dhaka, Bangladesh</span>
+                                </div>
                             </div>
                         </div>
                         
                         <div class="mt-12">
+                            <h5 class="text-xs uppercase tracking-widest text-brand-300 mb-4">Connect</h5>
                             <div class="flex space-x-4">
-                                <a href="#" class="interactable w-10 h-10 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-brand-900 transition"><i class="fab fa-linkedin-in"></i></a>
-                                <a href="#" class="interactable w-10 h-10 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-brand-900 transition"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="interactable w-10 h-10 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-brand-900 transition"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="interactable w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-brand-900 transition"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="interactable w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-brand-900 transition"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="interactable w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-brand-900 transition"><i class="fab fa-instagram"></i></a>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="bg-white p-12 lg:p-16">
+                    <!-- Form Side -->
+                    <div class="bg-dark-900 p-12 lg:p-16">
                         <form class="space-y-6">
                             <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Your Name</label>
-                                <input type="text" class="interactable w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition" placeholder="John Doe">
+                                <label class="block text-xs font-bold text-brand-400 uppercase tracking-widest mb-2">Your Name</label>
+                                <input type="text" class="interactable w-full px-4 py-3 bg-dark-800 border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500 text-white transition placeholder-slate-600" placeholder="John Doe">
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
-                                <input type="email" class="interactable w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition" placeholder="john@company.com">
+                                <label class="block text-xs font-bold text-brand-400 uppercase tracking-widest mb-2">Email Address</label>
+                                <input type="email" class="interactable w-full px-4 py-3 bg-dark-800 border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500 text-white transition placeholder-slate-600" placeholder="john@company.com">
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-slate-700 mb-2">How can I help?</label>
-                                <textarea rows="3" class="interactable w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition" placeholder="Tell me a bit about your project..."></textarea>
+                                <label class="block text-xs font-bold text-brand-400 uppercase tracking-widest mb-2">Project Details</label>
+                                <textarea rows="3" class="interactable w-full px-4 py-3 bg-dark-800 border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500 text-white transition placeholder-slate-600" placeholder="Tell me about your goals..."></textarea>
                             </div>
-                            <button class="interactable w-full py-4 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-700 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                            <button class="interactable w-full py-4 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-500 transition shadow-[0_0_20px_rgba(124,58,237,0.4)] transform hover:-translate-y-1">
                                 Send Message
                             </button>
                         </form>
@@ -456,23 +639,67 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-center">
-        <p class="font-serif italic text-lg mb-2">"Digital impact requires human insight."</p>
-        <div class="text-sm">
-            &copy; <script>document.write(new Date().getFullYear())</script> Jannatul Ferdous Kana. All Rights Reserved.
+    <!-- Enhanced Footer -->
+    <footer class="bg-dark-950 text-slate-400 py-16 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div class="col-span-1 md:col-span-2">
+                    <a href="#" class="text-3xl font-serif font-bold text-white tracking-tight mb-6 block">
+                        Jannatul<span class="text-brand-500">.</span>
+                    </a>
+                    <p class="text-sm text-slate-500 max-w-sm mb-6">
+                        A digital portfolio showcasing a commitment to data-driven growth and creative excellence. Let's make the web work for you.
+                    </p>
+                    <!-- Newsletter -->
+                    <div class="max-w-xs">
+                        <label class="text-xs font-bold text-white uppercase tracking-widest mb-2 block">Subscribe to insights</label>
+                        <div class="flex">
+                            <input type="email" placeholder="Email address" class="bg-dark-800 border-none text-white text-sm px-4 py-2 rounded-l-lg w-full focus:ring-1 focus:ring-brand-500 outline-none">
+                            <button class="bg-brand-600 text-white px-4 py-2 rounded-r-lg hover:bg-brand-500 transition"><i class="fas fa-arrow-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-4">Sitemap</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#home" class="hover:text-brand-400 transition">Home</a></li>
+                        <li><a href="#about" class="hover:text-brand-400 transition">About</a></li>
+                        <li><a href="#services" class="hover:text-brand-400 transition">Services</a></li>
+                        <li><a href="#blog" class="hover:text-brand-400 transition">Blog</a></li>
+                        <li><a href="#contact" class="hover:text-brand-400 transition">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-brand-400 transition">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-brand-400 transition">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <div class="text-xs text-slate-600">
+                    &copy; <script>document.write(new Date().getFullYear())</script> Jannatul Ferdous Kana. All Rights Reserved.
+                </div>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <i class="fab fa-cc-visa text-2xl text-slate-600"></i>
+                    <i class="fab fa-cc-mastercard text-2xl text-slate-600"></i>
+                    <i class="fab fa-cc-paypal text-2xl text-slate-600"></i>
+                </div>
+            </div>
         </div>
     </footer>
 
-    <!-- Scripts for Logic -->
+    <!-- Scripts -->
     <script>
-        // --- 1. Audio Engine (Piano Sound) ---
+        // --- 1. Refined Audio Engine ---
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         let soundEnabled = true;
-        
-        // Frequencies for a C Major scale (approx) to cycle through
-        // C4, D4, E4, F4, G4, A4, B4, C5
-        const notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
+        const notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25]; // C Maj
         let noteIndex = 0;
 
         function playPianoNote() {
@@ -481,105 +708,101 @@
                 if(!soundEnabled) return;
             }
 
-            // Create oscillator (sound source)
             const oscillator = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
 
-            // Set wave type to triangle for a softer, piano-like tone (sine is too pure, square too harsh)
-            oscillator.type = 'triangle';
+            oscillator.type = 'sine'; // Sine is smoother/more "glassy" for this dark theme
             
-            // Pick a note and cycle
-            const freq = notes[noteIndex];
-            noteIndex = (noteIndex + 1) % notes.length; // Loop through scale
+            // Randomize note slightly for more organic feel
+            const freq = notes[Math.floor(Math.random() * notes.length)];
             
             oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
 
-            // Envelope (Fade in and Fade out) to simulate a key strike
-            // Start at 0 volume
+            // Lower volume for subtlety
             gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-            // Quick attack to 0.1 volume
-            gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.02);
-            // Long decay to 0
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.5);
+            gainNode.gain.linearRampToValueAtTime(0.03, audioCtx.currentTime + 0.05); // Very quiet
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2); // Long tail reverb feel
 
-            // Connect graph
             oscillator.connect(gainNode);
             gainNode.connect(audioCtx.destination);
 
-            // Play
             oscillator.start();
-            oscillator.stop(audioCtx.currentTime + 1.5);
+            oscillator.stop(audioCtx.currentTime + 2);
         }
 
-        // Toggle Sound
         const toggleBtn = document.getElementById('sound-toggle');
         const toggleIcon = toggleBtn.querySelector('i');
         
         toggleBtn.addEventListener('click', () => {
             soundEnabled = !soundEnabled;
             if (soundEnabled) {
-                toggleIcon.className = 'fas fa-volume-up text-xl group-hover:animate-pulse';
+                toggleIcon.className = 'fas fa-volume-up text-lg group-hover:animate-pulse';
                 toggleBtn.classList.remove('opacity-50');
             } else {
-                toggleIcon.className = 'fas fa-volume-mute text-xl';
+                toggleIcon.className = 'fas fa-volume-mute text-lg';
                 toggleBtn.classList.add('opacity-50');
             }
         });
 
-
-        // --- 2. Custom Cursor Logic ---
+        // --- 2. Cursor Logic ---
         const cursorDot = document.querySelector('.cursor-dot');
         const cursorOutline = document.querySelector('.cursor-outline');
         
-        // Mouse movement
         window.addEventListener('mousemove', (e) => {
             const posX = e.clientX;
             const posY = e.clientY;
-
-            // Dot follows instantly
             cursorDot.style.left = `${posX}px`;
             cursorDot.style.top = `${posY}px`;
-
-            // Outline follows with slight delay (handled by CSS transition usually, or simple keyframe)
-            // Using animate for smooth trailing effect
+            
             cursorOutline.animate({
                 left: `${posX}px`,
                 top: `${posY}px`
-            }, { duration: 500, fill: "forwards" });
+            }, { duration: 400, fill: "forwards" });
         });
 
-        // Add interaction effects
-        const interactables = document.querySelectorAll('.interactable, a, button');
+        const interactables = document.querySelectorAll('.interactable');
         interactables.forEach(el => {
-            // Mouse Enter: Grow cursor + Play Sound
             el.addEventListener('mouseenter', () => {
                 document.body.classList.add('hovering');
-                playPianoNote(); // Play sound
+                playPianoNote();
             });
-            
-            // Mouse Leave: Shrink cursor
             el.addEventListener('mouseleave', () => {
                 document.body.classList.remove('hovering');
             });
         });
 
+        // --- 3. Scroll Reveal Animation ---
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
 
-        // --- 3. UI Logic (Mobile Menu & Scroll) ---
+        // --- 4. Mobile Menu ---
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
-
         btn.addEventListener('click', () => {
             menu.classList.toggle('hidden');
         });
-
+        
+        // --- 5. Navbar Glass Effect ---
         window.addEventListener('scroll', () => {
             const navbar = document.getElementById('navbar');
             if (window.scrollY > 20) {
-                navbar.classList.add('shadow-md');
-                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.classList.add('shadow-lg');
+                navbar.style.borderBottom = '1px solid rgba(255,255,255,0.1)';
             } else {
-                navbar.classList.remove('shadow-md');
-                navbar.style.background = 'rgba(255, 255, 255, 0.85)';
+                navbar.classList.remove('shadow-lg');
+                navbar.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
             }
         });
     </script>
