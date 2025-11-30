@@ -13,24 +13,24 @@
                 extend: {
                     colors: {
                         brand: {
-                            50: '#f5f3ff',
-                            100: '#ede9fe',
-                            200: '#ddd6fe',
-                            300: '#c4b5fd',
-                            400: '#a78bfa',
-                            500: '#8b5cf6',
-                            600: '#7c3aed',
-                            700: '#6d28d9',
-                            800: '#5b21b6',
-                            900: '#4c1d95',
-                            950: '#2e1065', // Deep purple base
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7', // Vivid Purple
+                            600: '#9333ea',
+                            700: '#7e22ce',
+                            800: '#6b21a8',
+                            900: '#581c87', // Deep Purple
+                            950: '#3b0764', // Darkest Purple
                         },
                         dark: {
-                            900: '#0f0720', // Almost black purple
-                            800: '#1a1033',
-                            700: '#2d1b4e',
+                            900: '#140326', // Deepest background purple
+                            800: '#23083d', // Panel background
+                            700: '#380e63', // Hover states
                         },
-                        accent: '#f43f5e',
+                        accent: '#d946ef', // Fuchsia
                     },
                     fontFamily: {
                         sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
@@ -40,11 +40,15 @@
                         'float': 'float 6s ease-in-out infinite',
                         'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'spin-slow': 'spin 12s linear infinite',
+                        'fill-bar': 'fillBar 1.5s ease-out forwards',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fillBar: {
+                            '0%': { width: '0%' },
                         }
                     },
                     backgroundImage: {
@@ -60,7 +64,7 @@
         /* --- Base & Scrollbar --- */
         body {
             cursor: none;
-            background-color: #0f0720; /* Brand Dark 900 */
+            background-color: #140326; /* Brand Dark 900 - Deep Purple */
             color: #e2e8f0;
         }
 
@@ -68,14 +72,14 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #0f0720;
+            background: #140326;
         }
         ::-webkit-scrollbar-thumb {
-            background: #4c1d95;
+            background: #6b21a8;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #7c3aed;
+            background: #9333ea;
         }
 
         /* --- Custom Cursor --- */
@@ -89,18 +93,18 @@
         }
         .cursor-dot {
             width: 8px; height: 8px;
-            background-color: #a78bfa;
-            box-shadow: 0 0 10px #a78bfa;
+            background-color: #c084fc;
+            box-shadow: 0 0 10px #c084fc;
         }
         .cursor-outline {
             width: 40px; height: 40px;
-            border: 1px solid rgba(167, 139, 250, 0.3);
+            border: 1px solid rgba(192, 132, 252, 0.3);
             transition: width 0.2s, height 0.2s, background-color 0.2s;
         }
         body.hovering .cursor-outline {
             width: 70px; height: 70px;
-            background-color: rgba(167, 139, 250, 0.05);
-            border-color: #a78bfa;
+            background-color: rgba(192, 132, 252, 0.05);
+            border-color: #c084fc;
         }
         @media (max-width: 768px) {
             body { cursor: auto; }
@@ -109,26 +113,26 @@
 
         /* --- Glassmorphism & Effects --- */
         .glass-nav {
-            background: rgba(15, 7, 32, 0.8);
+            background: rgba(20, 3, 38, 0.8);
             backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         
         .glass-card {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(59, 7, 100, 0.15); /* Slightly purple tinted glass */
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.1);
             transition: all 0.4s ease;
         }
         .glass-card:hover {
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(124, 58, 237, 0.5); /* Brand 600 */
-            box-shadow: 0 0 30px rgba(124, 58, 237, 0.15);
+            background: rgba(88, 28, 135, 0.3);
+            border-color: rgba(168, 85, 247, 0.5); /* Brand 500 */
+            box-shadow: 0 0 30px rgba(147, 51, 234, 0.2);
             transform: translateY(-5px);
         }
 
         .text-glow {
-            text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
         }
 
         /* --- Scroll Reveal Animation --- */
@@ -145,6 +149,11 @@
         /* --- Blog Card Image Zoom --- */
         .blog-card:hover img {
             transform: scale(1.05);
+        }
+
+        /* --- Funnel Graphic --- */
+        .funnel-step {
+            clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%);
         }
     </style>
 </head>
@@ -173,11 +182,10 @@
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-10 items-center">
                     <a href="#home" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">Home</a>
-                    <a href="#about" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">About</a>
+                    <a href="#services" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">Expertise</a>
                     <a href="#process" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">Process</a>
                     <a href="#portfolio" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">Work</a>
-                    <a href="#blog" class="interactable text-slate-300 hover:text-white font-medium transition text-xs uppercase tracking-widest hover:text-glow">Blog</a>
-                    <a href="#contact" class="interactable px-7 py-3 bg-gradient-to-r from-brand-600 to-brand-800 text-white font-medium rounded-full hover:shadow-[0_0_20px_rgba(124,58,237,0.5)] transition transform hover:-translate-y-0.5 border border-white/10">
+                    <a href="#contact" class="interactable px-7 py-3 bg-gradient-to-r from-brand-600 to-brand-800 text-white font-medium rounded-full hover:shadow-[0_0_20px_rgba(147,51,234,0.5)] transition transform hover:-translate-y-0.5 border border-white/10">
                         Let's Talk
                     </a>
                 </div>
@@ -195,10 +203,9 @@
         <div id="mobile-menu" class="hidden md:hidden bg-dark-900/95 backdrop-blur-xl border-t border-white/5 absolute w-full shadow-2xl">
             <div class="px-4 pt-2 pb-6 space-y-2">
                 <a href="#home" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">Home</a>
-                <a href="#about" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">About</a>
+                <a href="#services" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">Expertise</a>
                 <a href="#process" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">Process</a>
                 <a href="#portfolio" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">Portfolio</a>
-                <a href="#blog" class="block px-3 py-3 text-slate-300 hover:text-brand-400 font-medium interactable">Insights</a>
                 <a href="#contact" class="block px-3 py-3 text-brand-400 font-semibold interactable">Contact Me</a>
             </div>
         </div>
@@ -209,7 +216,7 @@
         <!-- Dynamic Background -->
         <div class="absolute inset-0 z-0">
             <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-brand-600/20 rounded-full mix-blend-screen filter blur-[120px] animate-pulse-slow"></div>
-            <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600/10 rounded-full mix-blend-screen filter blur-[100px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+            <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-800/20 rounded-full mix-blend-screen filter blur-[100px] animate-pulse-slow" style="animation-delay: 2s;"></div>
             <!-- Grid Pattern -->
             <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
         </div>
@@ -227,38 +234,22 @@
                     </div>
                     
                     <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-8 leading-[1.1] font-serif">
-                        Transforming Data into <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-brand-200 to-white text-glow">Digital Dominance.</span>
+                        Mastering the <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-brand-200 to-white text-glow">Digital Ecosystem.</span>
                     </h1>
                     
-                    <p class="text-lg text-slate-400 mb-12 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light">
-                        I am <span class="text-white font-medium">Jannatul Ferdous Kana</span>. A strategic digital marketer blending creative storytelling with rigorous analytics to scale brands in the modern web.
+                    <p class="text-lg text-slate-300 mb-12 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light">
+                        I am <span class="text-white font-medium">Jannatul Ferdous Kana</span>. Expert in scaling brands via Facebook, LinkedIn, and Google ecosystems using data-backed creative strategies.
                     </p>
                     
                     <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-6">
-                        <a href="#contact" class="interactable group px-8 py-4 bg-white text-brand-950 rounded-full font-bold hover:bg-brand-50 transition shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center justify-center">
+                        <a href="#contact" class="interactable group px-8 py-4 bg-white text-dark-900 rounded-full font-bold hover:bg-brand-50 transition shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center justify-center">
                             Start Scaling
                             <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </a>
-                        <a href="#portfolio" class="interactable px-8 py-4 bg-transparent border border-slate-600 text-white rounded-full font-semibold hover:border-brand-400 hover:bg-brand-500/10 transition flex items-center justify-center">
+                        <a href="#portfolio" class="interactable px-8 py-4 bg-transparent border border-slate-500 text-white rounded-full font-semibold hover:border-brand-400 hover:bg-brand-500/10 transition flex items-center justify-center">
                             View Case Studies
                         </a>
-                    </div>
-                    
-                    <!-- Stats Strip -->
-                    <div class="mt-16 pt-8 border-t border-white/5 flex justify-center lg:justify-start gap-12 text-center lg:text-left">
-                        <div>
-                            <div class="text-3xl font-bold text-white font-serif">5+</div>
-                            <div class="text-xs text-slate-500 uppercase tracking-widest mt-1">Years Exp.</div>
-                        </div>
-                        <div>
-                            <div class="text-3xl font-bold text-white font-serif">120%</div>
-                            <div class="text-xs text-slate-500 uppercase tracking-widest mt-1">Avg ROI</div>
-                        </div>
-                        <div>
-                            <div class="text-3xl font-bold text-white font-serif">40+</div>
-                            <div class="text-xs text-slate-500 uppercase tracking-widest mt-1">Brands</div>
-                        </div>
                     </div>
                 </div>
 
@@ -270,23 +261,22 @@
                         <div class="absolute inset-10 border border-brand-500/10 rounded-full animate-spin-slow" style="animation-direction: reverse;"></div>
                         
                         <!-- Central Image Container -->
-                        <div class="absolute inset-20 rounded-full overflow-hidden border-2 border-white/10 shadow-[0_0_50px_rgba(124,58,237,0.2)] animate-float bg-dark-800">
-                             <!-- Placeholder Image -->
-                             <div class="w-full h-full bg-gradient-to-br from-brand-900 to-slate-900 flex flex-col items-center justify-center text-slate-500 group interactable">
+                        <div class="absolute inset-20 rounded-full overflow-hidden border-2 border-white/10 shadow-[0_0_50px_rgba(147,51,234,0.3)] animate-float bg-dark-800">
+                             <div class="w-full h-full bg-gradient-to-br from-brand-900 to-dark-900 flex flex-col items-center justify-center text-slate-400 group interactable">
                                 <i class="fas fa-user-circle text-8xl mb-4 text-brand-500/50 group-hover:text-brand-400 transition-colors"></i>
                                 <span class="font-serif italic text-white/50">Jannatul F. Kana</span>
                              </div>
                         </div>
 
-                        <!-- Floating Glass Cards -->
-                        <div class="absolute top-20 right-0 glass-card p-4 rounded-xl animate-float interactable" style="animation-delay: 1s;">
-                            <i class="fab fa-google text-2xl text-white mb-1"></i>
-                            <div class="text-xs text-brand-200">Ads Certified</div>
+                        <!-- Floating Social Icons -->
+                        <div class="absolute top-10 right-0 glass-card w-16 h-16 rounded-2xl flex items-center justify-center animate-float interactable" style="animation-delay: 0.5s;">
+                            <i class="fab fa-facebook-f text-3xl text-blue-500"></i>
                         </div>
-                        
-                        <div class="absolute bottom-32 left-0 glass-card p-4 rounded-xl animate-float interactable" style="animation-delay: 2s;">
-                            <i class="fas fa-chart-line text-2xl text-green-400 mb-1"></i>
-                            <div class="text-xs text-brand-200">Growth Expert</div>
+                        <div class="absolute bottom-40 right-10 glass-card w-16 h-16 rounded-2xl flex items-center justify-center animate-float interactable" style="animation-delay: 1.5s;">
+                            <i class="fab fa-linkedin-in text-3xl text-blue-400"></i>
+                        </div>
+                         <div class="absolute bottom-20 left-10 glass-card w-16 h-16 rounded-2xl flex items-center justify-center animate-float interactable" style="animation-delay: 2.5s;">
+                            <i class="fab fa-google text-3xl text-red-500"></i>
                         </div>
                     </div>
                 </div>
@@ -294,111 +284,218 @@
         </div>
     </section>
 
-    <!-- Process Section (New) -->
-    <section id="process" class="py-24 relative bg-dark-900">
+    <!-- Services / Platform Mastery Section -->
+    <section id="services" class="py-24 relative overflow-hidden bg-dark-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-20 reveal">
-                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">Methodology</span>
-                <h2 class="text-4xl lg:text-5xl font-serif font-bold text-white">How I Drive Results</h2>
+                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">My Arsenal</span>
+                <h2 class="text-4xl lg:text-5xl font-serif font-bold text-white">Platform Ecosystems</h2>
+                <p class="text-slate-400 mt-4 max-w-2xl mx-auto">I don't just "run ads". I build interconnected funnels across the world's largest platforms to capture demand at every stage.</p>
             </div>
 
-            <div class="grid md:grid-cols-4 gap-8 relative">
-                <!-- Connector Line (Desktop) -->
-                <div class="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-brand-900 via-brand-500 to-brand-900 opacity-30"></div>
-
-                <!-- Step 1 -->
-                <div class="relative text-center reveal interactable" style="transition-delay: 100ms;">
-                    <div class="w-24 h-24 mx-auto bg-dark-800 border border-brand-500/30 rounded-full flex items-center justify-center text-3xl text-brand-400 mb-6 relative z-10 shadow-[0_0_30px_rgba(124,58,237,0.1)] group hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-microscope"></i>
+            <div class="grid md:grid-cols-3 gap-6 relative z-10">
+                
+                <!-- Facebook/Meta Card -->
+                <div class="glass-card p-8 rounded-3xl group interactable reveal hover:bg-blue-900/10 border-t-4 border-t-blue-500">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-16 h-16 bg-blue-600/20 rounded-2xl flex items-center justify-center text-blue-500 text-3xl">
+                            <i class="fab fa-facebook"></i>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold uppercase tracking-wider">B2C & D2C</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Discovery</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Auditing current assets, competitor analysis, and defining clear KPIs.</p>
+                    <h3 class="text-2xl font-bold text-white mb-2">Meta Ads (FB & IG)</h3>
+                    <p class="text-slate-400 text-sm mb-6">Full-funnel architecture from awareness to conversion.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-full bg-dark-900 rounded-full h-2 mr-3">
+                                <div class="bg-blue-500 h-2 rounded-full w-[95%] shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+                            </div>
+                            <span class="text-xs font-bold text-blue-400">95%</span>
+                        </div>
+                        <ul class="text-xs text-slate-400 space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Creative Sandbox Testing</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> CAPI & Pixel Setup</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-blue-500 mr-2"></i> Lookalike & Custom Audiences</li>
+                        </ul>
+                    </div>
                 </div>
 
-                <!-- Step 2 -->
-                <div class="relative text-center reveal interactable" style="transition-delay: 200ms;">
-                    <div class="w-24 h-24 mx-auto bg-dark-800 border border-brand-500/30 rounded-full flex items-center justify-center text-3xl text-brand-400 mb-6 relative z-10 shadow-[0_0_30px_rgba(124,58,237,0.1)] group hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-chess-knight"></i>
+                <!-- LinkedIn Card -->
+                <div class="glass-card p-8 rounded-3xl group interactable reveal hover:bg-sky-900/10 border-t-4 border-t-sky-600" style="transition-delay: 100ms;">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-16 h-16 bg-sky-600/20 rounded-2xl flex items-center justify-center text-sky-500 text-3xl">
+                            <i class="fab fa-linkedin-in"></i>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 text-xs font-bold uppercase tracking-wider">B2B Leads</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Strategy</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Crafting a bespoke roadmap covering SEO, Content, and Paid Media channels.</p>
+                    <h3 class="text-2xl font-bold text-white mb-2">LinkedIn Marketing</h3>
+                    <p class="text-slate-400 text-sm mb-6">Precision targeting for decision makers and ABM strategies.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-full bg-dark-900 rounded-full h-2 mr-3">
+                                <div class="bg-sky-500 h-2 rounded-full w-[90%] shadow-[0_0_10px_rgba(14,165,233,0.5)]"></div>
+                            </div>
+                            <span class="text-xs font-bold text-sky-400">90%</span>
+                        </div>
+                        <ul class="text-xs text-slate-400 space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-sky-500 mr-2"></i> Account Based Marketing (ABM)</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-sky-500 mr-2"></i> Lead Gen Forms</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-sky-500 mr-2"></i> Sales Navigator Strategy</li>
+                        </ul>
+                    </div>
                 </div>
 
-                <!-- Step 3 -->
-                <div class="relative text-center reveal interactable" style="transition-delay: 300ms;">
-                    <div class="w-24 h-24 mx-auto bg-dark-800 border border-brand-500/30 rounded-full flex items-center justify-center text-3xl text-brand-400 mb-6 relative z-10 shadow-[0_0_30px_rgba(124,58,237,0.1)] group hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-rocket"></i>
+                <!-- Google/PPC Card -->
+                <div class="glass-card p-8 rounded-3xl group interactable reveal hover:bg-red-900/10 border-t-4 border-t-red-500" style="transition-delay: 200ms;">
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="w-16 h-16 bg-red-600/20 rounded-2xl flex items-center justify-center text-red-500 text-3xl">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-red-500/10 text-red-400 text-xs font-bold uppercase tracking-wider">High Intent</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Execution</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Implementation of campaigns with continuous A/B testing and optimization.</p>
+                    <h3 class="text-2xl font-bold text-white mb-2">Google Ads (PPC)</h3>
+                    <p class="text-slate-400 text-sm mb-6">Capturing demand exactly when customers are searching.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="w-full bg-dark-900 rounded-full h-2 mr-3">
+                                <div class="bg-red-500 h-2 rounded-full w-[88%] shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
+                            </div>
+                            <span class="text-xs font-bold text-red-400">88%</span>
+                        </div>
+                        <ul class="text-xs text-slate-400 space-y-2">
+                            <li class="flex items-center"><i class="fas fa-check-circle text-red-500 mr-2"></i> Search & Shopping Ads</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-red-500 mr-2"></i> YouTube Video Campaigns</li>
+                            <li class="flex items-center"><i class="fas fa-check-circle text-red-500 mr-2"></i> GA4 & Tag Manager</li>
+                        </ul>
+                    </div>
                 </div>
+            </div>
 
-                <!-- Step 4 -->
-                <div class="relative text-center reveal interactable" style="transition-delay: 400ms;">
-                    <div class="w-24 h-24 mx-auto bg-dark-800 border border-brand-500/30 rounded-full flex items-center justify-center text-3xl text-brand-400 mb-6 relative z-10 shadow-[0_0_30px_rgba(124,58,237,0.1)] group hover:scale-110 transition-transform duration-300">
-                        <i class="fas fa-chart-pie"></i>
+            <!-- Graphical Funnel Visualization -->
+            <div class="mt-24 reveal">
+                <div class="text-center mb-12">
+                    <h3 class="text-2xl font-bold text-white">Growth Architecture</h3>
+                    <p class="text-slate-400 text-sm">How channels connect to drive revenue</p>
+                </div>
+                
+                <div class="relative max-w-4xl mx-auto">
+                    <!-- Funnel Steps -->
+                    <div class="flex flex-col gap-2 relative z-10">
+                        <!-- Top Funnel (Awareness) -->
+                        <div class="funnel-step bg-gradient-to-r from-blue-900 to-sky-900 h-24 flex items-center justify-center w-full mx-auto relative group interactable">
+                            <div class="text-center">
+                                <div class="text-white font-bold text-lg">Awareness & Traffic</div>
+                                <div class="flex gap-4 mt-2 justify-center text-2xl text-white/70">
+                                    <i class="fab fa-facebook hover:text-white transition"></i>
+                                    <i class="fab fa-instagram hover:text-white transition"></i>
+                                    <i class="fab fa-tiktok hover:text-white transition"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Mid Funnel (Consideration) -->
+                        <div class="funnel-step bg-gradient-to-r from-brand-900 to-purple-900 h-24 flex items-center justify-center w-[85%] mx-auto relative group interactable">
+                            <div class="text-center">
+                                <div class="text-white font-bold text-lg">Consideration & Intent</div>
+                                <div class="flex gap-4 mt-2 justify-center text-2xl text-white/70">
+                                    <i class="fab fa-google hover:text-white transition"></i>
+                                    <i class="fab fa-linkedin hover:text-white transition"></i>
+                                    <i class="fas fa-envelope hover:text-white transition"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bottom Funnel (Conversion) -->
+                        <div class="funnel-step bg-gradient-to-r from-green-900 to-emerald-900 h-24 flex items-center justify-center w-[70%] mx-auto relative group interactable">
+                            <div class="text-center">
+                                <div class="text-white font-bold text-lg">Conversion & Sales</div>
+                                <div class="flex gap-4 mt-2 justify-center text-2xl text-white/70">
+                                    <i class="fas fa-shopping-cart hover:text-white transition"></i>
+                                    <i class="fas fa-file-contract hover:text-white transition"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">Analytics</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">Deep-dive reporting on ROI and strategic adjustments for scaling.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Services Section -->
-    <section id="services" class="py-24 relative overflow-hidden">
-        <!-- Decoration -->
-        <div class="absolute right-0 top-1/3 w-96 h-96 bg-brand-900/30 rounded-full mix-blend-screen filter blur-[80px]"></div>
-
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-16 reveal">
-                <div>
-                    <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">Expertise</span>
-                    <h2 class="text-4xl lg:text-5xl font-serif font-bold text-white">Advanced Solutions</h2>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Service Card 1 -->
-                <div class="glass-card p-8 rounded-2xl interactable reveal group">
-                    <div class="w-14 h-14 bg-brand-500/10 rounded-lg flex items-center justify-center text-brand-400 text-2xl mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors">
-                        <i class="fas fa-search"></i>
+    <!-- Technical Mastery / Skills Section -->
+    <section class="py-20 bg-dark-900 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">Technical Skills</span>
+                    <h2 class="text-3xl font-serif font-bold text-white mb-6">Tools of the Trade</h2>
+                    <p class="text-slate-400 mb-8 leading-relaxed">
+                        Strategy is nothing without execution. I am proficient in the industry-standard tools required to track, optimize, and scale campaigns effectively.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-dark-800 p-4 rounded-lg flex items-center gap-3 border border-white/5">
+                            <i class="fas fa-chart-bar text-brand-400 text-xl"></i>
+                            <span class="text-slate-300 font-medium text-sm">GA4 Analytics</span>
+                        </div>
+                        <div class="bg-dark-800 p-4 rounded-lg flex items-center gap-3 border border-white/5">
+                            <i class="fas fa-tag text-brand-400 text-xl"></i>
+                            <span class="text-slate-300 font-medium text-sm">Google Tag Manager</span>
+                        </div>
+                        <div class="bg-dark-800 p-4 rounded-lg flex items-center gap-3 border border-white/5">
+                            <i class="fas fa-robot text-brand-400 text-xl"></i>
+                            <span class="text-slate-300 font-medium text-sm">HubSpot CRM</span>
+                        </div>
+                        <div class="bg-dark-800 p-4 rounded-lg flex items-center gap-3 border border-white/5">
+                            <i class="fas fa-paint-brush text-brand-400 text-xl"></i>
+                            <span class="text-slate-300 font-medium text-sm">Canva Pro</span>
+                        </div>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-4">Technical SEO</h3>
-                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">Going beyond keywords. I optimize site architecture, core web vitals, and schema markup to dominate SERPs.</p>
-                    <ul class="text-xs text-slate-500 space-y-2 mb-6">
-                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Audit & Fixes</li>
-                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> On-Page Optimization</li>
-                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Backlink Strategy</li>
-                    </ul>
-                </div>
-
-                <!-- Service Card 2 -->
-                <div class="glass-card p-8 rounded-2xl interactable reveal group" style="transition-delay: 100ms;">
-                    <div class="w-14 h-14 bg-brand-500/10 rounded-lg flex items-center justify-center text-brand-400 text-2xl mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors">
-                        <i class="fas fa-bullhorn"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white mb-4">Performance Marketing</h3>
-                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">Data-backed paid campaigns on Meta & Google. I focus on reducing CPA while scaling ad spend profitably.</p>
-                    <ul class="text-xs text-slate-500 space-y-2 mb-6">
-                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Audience Segmentation</li>
-                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Retargeting Funnels</li>
-                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Creative Testing</li>
-                    </ul>
                 </div>
 
-                <!-- Service Card 3 -->
-                <div class="glass-card p-8 rounded-2xl interactable reveal group" style="transition-delay: 200ms;">
-                    <div class="w-14 h-14 bg-brand-500/10 rounded-lg flex items-center justify-center text-brand-400 text-2xl mb-6 group-hover:bg-brand-500 group-hover:text-white transition-colors">
-                        <i class="fas fa-pen-nib"></i>
+                <div class="reveal space-y-6">
+                    <!-- Skill Bar 1 -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-white font-bold text-sm">Strategic Planning</span>
+                            <span class="text-brand-400 font-bold text-sm">98%</span>
+                        </div>
+                        <div class="h-2 bg-dark-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-brand-600 to-accent w-0 animate-fill-bar" style="width: 98%; animation-delay: 0.2s"></div>
+                        </div>
                     </div>
-                    <h3 class="text-2xl font-bold text-white mb-4">Content Strategy</h3>
-                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">Building authority through valuable content. From blog posts to video scripts, I align content with user intent.</p>
-                    <ul class="text-xs text-slate-500 space-y-2 mb-6">
-                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Content Calendar</li>
-                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> E-E-A-T Compliance</li>
-                        <li class="flex items-center"><i class="fas fa-check text-brand-500 mr-2"></i> Email Newsletters</li>
-                    </ul>
+                    <!-- Skill Bar 2 -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-white font-bold text-sm">Copywriting</span>
+                            <span class="text-brand-400 font-bold text-sm">92%</span>
+                        </div>
+                        <div class="h-2 bg-dark-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-brand-600 to-accent w-0 animate-fill-bar" style="width: 92%; animation-delay: 0.4s"></div>
+                        </div>
+                    </div>
+                    <!-- Skill Bar 3 -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-white font-bold text-sm">Data Analysis</span>
+                            <span class="text-brand-400 font-bold text-sm">95%</span>
+                        </div>
+                        <div class="h-2 bg-dark-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-brand-600 to-accent w-0 animate-fill-bar" style="width: 95%; animation-delay: 0.6s"></div>
+                        </div>
+                    </div>
+                    <!-- Skill Bar 4 -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="text-white font-bold text-sm">Email Automation</span>
+                            <span class="text-brand-400 font-bold text-sm">88%</span>
+                        </div>
+                        <div class="h-2 bg-dark-800 rounded-full overflow-hidden">
+                            <div class="h-full bg-gradient-to-r from-brand-600 to-accent w-0 animate-fill-bar" style="width: 88%; animation-delay: 0.8s"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -420,7 +517,7 @@
                 <div class="group relative grid md:grid-cols-12 gap-8 items-center reveal interactable">
                     <div class="md:col-span-7 relative z-10">
                         <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/5 relative">
-                            <div class="absolute inset-0 bg-gradient-to-tr from-brand-900 to-slate-800 group-hover:scale-105 transition-transform duration-700"></div>
+                            <div class="absolute inset-0 bg-gradient-to-tr from-brand-900 to-dark-900 group-hover:scale-105 transition-transform duration-700"></div>
                             <!-- Mock UI -->
                             <div class="absolute inset-0 flex items-center justify-center">
                                 <i class="fas fa-shopping-bag text-6xl text-white/10 group-hover:text-brand-400/20 transition-colors"></i>
@@ -481,94 +578,10 @@
                     </div>
                     <div class="md:col-span-7 md:order-2 order-1 relative z-10">
                         <div class="aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/5 relative">
-                            <div class="absolute inset-0 bg-gradient-to-tl from-blue-900 to-dark-800 group-hover:scale-105 transition-transform duration-700"></div>
+                            <div class="absolute inset-0 bg-gradient-to-tl from-brand-800 to-dark-900 group-hover:scale-105 transition-transform duration-700"></div>
                              <div class="absolute inset-0 flex items-center justify-center">
                                 <i class="fas fa-server text-6xl text-white/10 group-hover:text-brand-400/20 transition-colors"></i>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- New: Blog Section -->
-    <section id="blog" class="py-24 relative">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-20 reveal">
-                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-3 block">Thought Leadership</span>
-                <h2 class="text-4xl lg:text-5xl font-serif font-bold text-white">Latest Insights</h2>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Blog 1 -->
-                <article class="blog-card group interactable reveal cursor-pointer">
-                    <div class="aspect-[4/3] rounded-2xl overflow-hidden mb-6 relative">
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent z-10 opacity-60"></div>
-                        <img src="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="SEO" class="w-full h-full object-cover transition-transform duration-700">
-                        <div class="absolute top-4 left-4 z-20 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider">SEO</div>
-                    </div>
-                    <div class="text-xs text-slate-500 mb-2">Oct 24, 2024 • 5 min read</div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-brand-400 transition-colors">The Death of Third-Party Cookies: What Next?</h3>
-                    <p class="text-slate-400 text-sm mb-4 line-clamp-3">Google is phasing out cookies. Here is how marketers need to pivot towards first-party data strategies to maintain targeting precision.</p>
-                    <span class="text-brand-400 text-sm font-bold flex items-center group-hover:translate-x-2 transition-transform">Read Article <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
-                </article>
-
-                <!-- Blog 2 -->
-                <article class="blog-card group interactable reveal cursor-pointer" style="transition-delay: 100ms;">
-                    <div class="aspect-[4/3] rounded-2xl overflow-hidden mb-6 relative">
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent z-10 opacity-60"></div>
-                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Social Media" class="w-full h-full object-cover transition-transform duration-700">
-                        <div class="absolute top-4 left-4 z-20 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider">Social</div>
-                    </div>
-                    <div class="text-xs text-slate-500 mb-2">Nov 02, 2024 • 4 min read</div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-brand-400 transition-colors">Viral is Vanity: Building Sustainable Communities</h3>
-                    <p class="text-slate-400 text-sm mb-4 line-clamp-3">Why chasing the viral trend often leads to low-quality followers, and how to build a tribe that actually buys your product.</p>
-                    <span class="text-brand-400 text-sm font-bold flex items-center group-hover:translate-x-2 transition-transform">Read Article <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
-                </article>
-
-                <!-- Blog 3 -->
-                <article class="blog-card group interactable reveal cursor-pointer" style="transition-delay: 200ms;">
-                    <div class="aspect-[4/3] rounded-2xl overflow-hidden mb-6 relative">
-                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900 to-transparent z-10 opacity-60"></div>
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Analytics" class="w-full h-full object-cover transition-transform duration-700">
-                        <div class="absolute top-4 left-4 z-20 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider">Analytics</div>
-                    </div>
-                    <div class="text-xs text-slate-500 mb-2">Nov 15, 2024 • 8 min read</div>
-                    <h3 class="text-xl font-bold text-white mb-3 group-hover:text-brand-400 transition-colors">Understanding GA4: A Marketer's Guide</h3>
-                    <p class="text-slate-400 text-sm mb-4 line-clamp-3">Universal Analytics is gone. This guide breaks down events, parameters, and exploration reports in the new Google Analytics 4.</p>
-                    <span class="text-brand-400 text-sm font-bold flex items-center group-hover:translate-x-2 transition-transform">Read Article <i class="fas fa-arrow-right ml-2 text-xs"></i></span>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- New: Testimonials -->
-    <section class="py-24 bg-dark-800 border-y border-white/5">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16 reveal">
-                <i class="fas fa-quote-left text-4xl text-brand-500/30 mb-6"></i>
-                <h2 class="text-3xl lg:text-4xl font-serif font-bold text-white">Clients Speak</h2>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="glass-card p-8 rounded-2xl reveal interactable">
-                    <p class="text-slate-300 italic mb-6 text-lg leading-relaxed">"Jannatul transformed our chaotic ad account into a consistent revenue engine. Her attention to data is unmatched."</p>
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-xl text-white mr-4 font-serif font-bold">JD</div>
-                        <div>
-                            <div class="text-white font-bold">John Davis</div>
-                            <div class="text-xs text-brand-400 uppercase">CEO, TechStart</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="glass-card p-8 rounded-2xl reveal interactable" style="transition-delay: 100ms;">
-                    <p class="text-slate-300 italic mb-6 text-lg leading-relaxed">"We were struggling to get noticed. The SEO and Content strategy she deployed doubled our organic traffic in 4 months."</p>
-                    <div class="flex items-center">
-                        <div class="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-xl text-white mr-4 font-serif font-bold">AS</div>
-                        <div>
-                            <div class="text-white font-bold">Sarah Al-Mansour</div>
-                            <div class="text-xs text-brand-400 uppercase">Founder, StyleCo</div>
                         </div>
                     </div>
                 </div>
@@ -581,12 +594,12 @@
         <div class="absolute inset-0 opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
         
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="bg-gradient-to-br from-brand-900 to-dark-800 rounded-[3rem] overflow-hidden shadow-2xl border border-white/10">
+            <div class="bg-gradient-to-br from-brand-900 to-dark-900 rounded-[3rem] overflow-hidden shadow-2xl border border-white/10">
                 
                 <div class="grid lg:grid-cols-2 gap-0">
                     <!-- Text Side -->
                     <div class="p-12 lg:p-16 flex flex-col justify-between text-white relative overflow-hidden">
-                        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-500 rounded-full mix-blend-overlay filter blur-[80px] opacity-40"></div>
+                        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-600 rounded-full mix-blend-overlay filter blur-[80px] opacity-40"></div>
                         
                         <div>
                             <h2 class="text-4xl font-serif font-bold mb-6">Let's build your legacy.</h2>
@@ -629,7 +642,7 @@
                                 <label class="block text-xs font-bold text-brand-400 uppercase tracking-widest mb-2">Project Details</label>
                                 <textarea rows="3" class="interactable w-full px-4 py-3 bg-dark-800 border border-white/10 rounded-lg focus:outline-none focus:ring-1 focus:ring-brand-500 text-white transition placeholder-slate-600" placeholder="Tell me about your goals..."></textarea>
                             </div>
-                            <button class="interactable w-full py-4 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-500 transition shadow-[0_0_20px_rgba(124,58,237,0.4)] transform hover:-translate-y-1">
+                            <button class="interactable w-full py-4 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-500 transition shadow-[0_0_20px_rgba(147,51,234,0.4)] transform hover:-translate-y-1">
                                 Send Message
                             </button>
                         </form>
@@ -640,7 +653,7 @@
     </section>
 
     <!-- Enhanced Footer -->
-    <footer class="bg-dark-950 text-slate-400 py-16 border-t border-white/5">
+    <footer class="bg-dark-900 text-slate-400 py-16 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-4 gap-12 mb-12">
                 <div class="col-span-1 md:col-span-2">
