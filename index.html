@@ -1,1 +1,587 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jannatul Ferdous Kana | Digital Marketer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff', // Light Violet
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6', // Primary Purple
+                            600: '#7c3aed', // Darker Purple
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95', // Deepest Purple
+                            950: '#2e1065',
+                        },
+                        accent: '#ec4899', // Pink accent
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap');
+        
+        /* Custom Cursor Styles */
+        body {
+            cursor: none; /* Hide default cursor */
+        }
+        
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
 
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #7c3aed; /* Brand 600 */
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(124, 58, 237, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+
+        /* Hover effect for cursor */
+        body.hovering .cursor-outline {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(124, 58, 237, 0.1);
+            border-color: transparent;
+        }
+
+        /* Glassmorphism */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* Smooth Text Selection */
+        ::selection {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        /* Hide cursor on mobile */
+        @media (max-width: 768px) {
+            body { cursor: auto; }
+            .cursor-dot, .cursor-outline { display: none; }
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-800 antialiased bg-slate-50 overflow-x-hidden selection:bg-brand-200">
+
+    <!-- Custom Cursor Elements -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <!-- Audio Toggle -->
+    <button id="sound-toggle" class="fixed bottom-6 right-6 z-50 bg-white p-3 rounded-full shadow-lg border border-slate-200 text-brand-600 hover:scale-110 transition-transform duration-300 group interactable" aria-label="Toggle Sound">
+        <i class="fas fa-volume-up text-xl group-hover:animate-pulse"></i>
+    </button>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 glass-nav transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-24">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center interactable">
+                    <a href="#" class="text-3xl font-serif font-bold text-brand-950 tracking-tight">
+                        Jannatul<span class="text-brand-600 text-4xl">.</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#home" class="interactable text-slate-600 hover:text-brand-600 font-medium transition text-sm uppercase tracking-wide">Home</a>
+                    <a href="#about" class="interactable text-slate-600 hover:text-brand-600 font-medium transition text-sm uppercase tracking-wide">About</a>
+                    <a href="#services" class="interactable text-slate-600 hover:text-brand-600 font-medium transition text-sm uppercase tracking-wide">Services</a>
+                    <a href="#portfolio" class="interactable text-slate-600 hover:text-brand-600 font-medium transition text-sm uppercase tracking-wide">Portfolio</a>
+                    <a href="#contact" class="interactable px-6 py-3 bg-brand-900 text-white font-medium rounded-full hover:bg-brand-800 transition shadow-lg shadow-brand-900/20 transform hover:-translate-y-0.5">
+                        Let's Talk
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center interactable">
+                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-brand-600 focus:outline-none p-2">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 absolute w-full shadow-xl">
+            <div class="px-4 pt-2 pb-6 space-y-1">
+                <a href="#home" class="block px-3 py-3 text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-md font-medium interactable">Home</a>
+                <a href="#about" class="block px-3 py-3 text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-md font-medium interactable">About</a>
+                <a href="#services" class="block px-3 py-3 text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-md font-medium interactable">Services</a>
+                <a href="#portfolio" class="block px-3 py-3 text-slate-600 hover:text-brand-600 hover:bg-slate-50 rounded-md font-medium interactable">Portfolio</a>
+                <a href="#contact" class="block px-3 py-3 text-brand-600 font-semibold interactable">Contact Me</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-slate-50">
+        <!-- Background Gradients -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-brand-200 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-pulse-slow"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-[500px] h-[500px] bg-purple-200 rounded-full mix-blend-multiply filter blur-[100px] opacity-40 animate-pulse-slow"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                
+                <div class="lg:w-1/2 text-center lg:text-left">
+                    <div class="inline-flex items-center px-4 py-2 rounded-full bg-white border border-brand-100 text-brand-700 text-sm font-semibold mb-8 shadow-sm interactable animate-fade-in-up">
+                        <span class="relative flex h-3 w-3 mr-2">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-brand-500"></span>
+                        </span>
+                        Open for collaborations
+                    </div>
+                    
+                    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-900 tracking-tight mb-6 leading-[1.1] font-serif">
+                        Digital Marketing <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-accent">Reimagined.</span>
+                    </h1>
+                    
+                    <p class="text-lg sm:text-xl text-slate-600 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light">
+                        Hello, I'm <span class="font-semibold text-brand-700">Jannatul Ferdous Kana</span>. I craft data-driven digital strategies that resonate with audiences and deliver measurable ROI.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-5">
+                        <a href="#contact" class="interactable group px-8 py-4 bg-brand-900 text-white rounded-full font-semibold hover:bg-brand-800 transition shadow-xl shadow-brand-900/20 flex items-center justify-center">
+                            Start a Project
+                            <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#portfolio" class="interactable px-8 py-4 bg-white text-slate-700 border border-slate-200 rounded-full font-semibold hover:bg-slate-50 hover:border-brand-200 transition shadow-sm flex items-center justify-center">
+                            <i class="fas fa-play mr-2 text-xs text-brand-500"></i> View Work
+                        </a>
+                    </div>
+                    
+                    <div class="mt-12 flex items-center justify-center lg:justify-start space-x-8 text-slate-400">
+                        <i class="fab fa-google text-2xl hover:text-slate-600 transition interactable" title="Google Ads Certified"></i>
+                        <i class="fab fa-meta text-2xl hover:text-slate-600 transition interactable" title="Meta Certified"></i>
+                        <i class="fab fa-hubspot text-2xl hover:text-slate-600 transition interactable" title="HubSpot Certified"></i>
+                        <div class="h-8 w-px bg-slate-200"></div>
+                        <span class="text-sm font-medium text-slate-500">Certified Professional</span>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2 relative lg:h-[600px] w-full flex items-center justify-center">
+                    <!-- Abstract geometric shape background -->
+                    <div class="absolute inset-0 bg-gradient-to-tr from-brand-100 to-transparent rounded-full opacity-30 blur-3xl transform rotate-12"></div>
+                    
+                    <div class="relative w-full max-w-md mx-auto animate-float">
+                        <div class="relative z-10 rounded-[2rem] overflow-hidden shadow-2xl border-[8px] border-white/50 aspect-[4/5]">
+                             <div class="absolute inset-0 bg-slate-200 flex items-center justify-center">
+                                <div class="text-center text-slate-400">
+                                    <i class="fas fa-user-astronaut text-8xl mb-4 text-brand-200"></i>
+                                    <p class="font-medium font-serif italic">Insert Portrait Here</p>
+                                </div>
+                             </div>
+                             <!-- Glass Overlay at bottom -->
+                             <div class="absolute bottom-0 left-0 right-0 bg-white/10 backdrop-blur-md border-t border-white/20 p-6">
+                                <p class="text-white font-serif text-xl">Jannatul F. Kana</p>
+                                <p class="text-brand-100 text-sm">Senior Strategist</p>
+                             </div>
+                        </div>
+
+                        <!-- Floating Badge 1 -->
+                        <div class="absolute -right-8 top-12 bg-white p-4 rounded-xl shadow-lg animate-bounce duration-[3000ms] interactable">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-green-100 p-2 rounded-full text-green-600"><i class="fas fa-chart-line"></i></div>
+                                <div>
+                                    <p class="text-xs text-slate-500">ROI Increase</p>
+                                    <p class="font-bold text-slate-800">+150%</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Badge 2 -->
+                        <div class="absolute -left-8 bottom-20 bg-white p-4 rounded-xl shadow-lg animate-pulse-slow interactable">
+                            <div class="flex items-center gap-3">
+                                <div class="bg-brand-100 p-2 rounded-full text-brand-600"><i class="fas fa-users"></i></div>
+                                <div>
+                                    <p class="text-xs text-slate-500">Reach</p>
+                                    <p class="font-bold text-slate-800">1M+</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section (Glassmorphism) -->
+    <section id="services" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-20">
+                <span class="text-brand-600 font-bold tracking-widest uppercase text-xs mb-3 block">Expertise</span>
+                <h2 class="text-4xl lg:text-5xl font-serif font-bold text-slate-900 mb-6">Holistic Digital Solutions</h2>
+                <div class="h-1 w-20 bg-brand-500 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="group interactable p-8 rounded-3xl bg-slate-50 hover:bg-brand-900 hover:text-white transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-100">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-brand-600 text-3xl mb-8 shadow-sm group-hover:bg-white/10 group-hover:text-white transition-colors">
+                        <i class="fas fa-search-location"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 font-serif">Advanced SEO</h3>
+                    <p class="text-slate-600 mb-6 group-hover:text-brand-100">Dominate search results with technical SEO, schema markup, and high-intent keyword strategies.</p>
+                    <a href="#contact" class="inline-flex items-center font-semibold text-brand-600 group-hover:text-white transition-colors">
+                        Learn more <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="group interactable p-8 rounded-3xl bg-slate-50 hover:bg-brand-900 hover:text-white transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-100">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-accent text-3xl mb-8 shadow-sm group-hover:bg-white/10 group-hover:text-white transition-colors">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 font-serif">Social Growth</h3>
+                    <p class="text-slate-600 mb-6 group-hover:text-brand-100">Organic community building and viral content creation across Instagram, TikTok, and LinkedIn.</p>
+                    <a href="#contact" class="inline-flex items-center font-semibold text-brand-600 group-hover:text-white transition-colors">
+                        Learn more <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="group interactable p-8 rounded-3xl bg-slate-50 hover:bg-brand-900 hover:text-white transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 border border-slate-100">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-orange-500 text-3xl mb-8 shadow-sm group-hover:bg-white/10 group-hover:text-white transition-colors">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 font-serif">Precision Ads</h3>
+                    <p class="text-slate-600 mb-6 group-hover:text-brand-100">High-conversion PPC campaigns. We stop the scroll and turn impressions into revenue.</p>
+                    <a href="#contact" class="inline-flex items-center font-semibold text-brand-600 group-hover:text-white transition-colors">
+                        Learn more <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section with Piano Keys Vibe -->
+    <section id="portfolio" class="py-24 bg-brand-50 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-300 to-transparent"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16">
+                <div>
+                    <span class="text-brand-600 font-bold tracking-widest uppercase text-xs mb-3 block">Selected Works</span>
+                    <h2 class="text-4xl lg:text-5xl font-serif font-bold text-slate-900">Featured Case Studies</h2>
+                </div>
+                <a href="#" class="interactable hidden md:inline-flex px-6 py-3 border border-brand-200 rounded-full text-brand-700 font-medium hover:bg-brand-100 transition items-center">
+                    View Full Archive <i class="fas fa-external-link-alt ml-2 text-sm"></i>
+                </a>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-10">
+                <!-- Large Project 1 -->
+                <div class="group interactable relative rounded-3xl overflow-hidden shadow-xl aspect-video cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-br from-brand-900 via-purple-800 to-slate-900 transition-transform duration-700 group-hover:scale-105"></div>
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
+                    
+                    <!-- Content -->
+                    <div class="absolute bottom-0 left-0 p-8 w-full">
+                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <div class="text-brand-200 text-sm font-bold uppercase tracking-wider mb-2">E-Commerce Scaling</div>
+                            <h3 class="text-3xl font-serif text-white font-bold mb-2">Velvet Fashion</h3>
+                            <p class="text-brand-100 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 max-w-md">
+                                A comprehensive rebrand and funnel optimization resulting in 3x ROAS.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Icon -->
+                    <div class="absolute top-8 right-8 bg-white/20 backdrop-blur-md p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </div>
+                </div>
+
+                <!-- Large Project 2 -->
+                <div class="group interactable relative rounded-3xl overflow-hidden shadow-xl aspect-video cursor-pointer">
+                    <div class="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-700 to-brand-900 transition-transform duration-700 group-hover:scale-105"></div>
+                    <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors"></div>
+                    
+                    <div class="absolute bottom-0 left-0 p-8 w-full">
+                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                            <div class="text-brand-200 text-sm font-bold uppercase tracking-wider mb-2">B2B Lead Gen</div>
+                            <h3 class="text-3xl font-serif text-white font-bold mb-2">TechFlow Solutions</h3>
+                            <p class="text-brand-100 opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100 max-w-md">
+                                LinkedIn strategy that generated 500+ qualified leads in Q1.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="absolute top-8 right-8 bg-white/20 backdrop-blur-md p-3 rounded-full text-white opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                        <i class="fas fa-arrow-up-right-from-square"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Smaller grid -->
+            <div class="grid md:grid-cols-3 gap-8 mt-10">
+                 <!-- Mini Project 1 -->
+                 <div class="interactable bg-white p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all border border-slate-100 group">
+                    <div class="h-10 w-10 bg-brand-100 rounded-lg flex items-center justify-center text-brand-600 mb-4 group-hover:bg-brand-600 group-hover:text-white transition-colors">
+                        <i class="fas fa-pen-fancy"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-1">Copywriting</h4>
+                    <p class="text-sm text-slate-500">Blog Strategy for SaaS</p>
+                 </div>
+                 
+                 <!-- Mini Project 2 -->
+                 <div class="interactable bg-white p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all border border-slate-100 group">
+                    <div class="h-10 w-10 bg-pink-100 rounded-lg flex items-center justify-center text-pink-600 mb-4 group-hover:bg-pink-600 group-hover:text-white transition-colors">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-1">Email Marketing</h4>
+                    <p class="text-sm text-slate-500">Newsletter 45% Open Rate</p>
+                 </div>
+
+                 <!-- Mini Project 3 -->
+                 <div class="interactable bg-white p-6 rounded-2xl shadow-sm hover:shadow-lg transition-all border border-slate-100 group">
+                    <div class="h-10 w-10 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600 mb-4 group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h4 class="font-bold text-lg mb-1">Analytics</h4>
+                    <p class="text-sm text-slate-500">Custom G4 Dashboard Setup</p>
+                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-white relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-brand-900 rounded-[3rem] overflow-hidden shadow-2xl relative">
+                <!-- Abstract BG -->
+                <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                <div class="absolute top-0 right-0 w-96 h-96 bg-brand-500 rounded-full mix-blend-overlay filter blur-[100px] opacity-50"></div>
+                
+                <div class="grid lg:grid-cols-2 gap-0 relative z-10">
+                    <div class="p-12 lg:p-16 flex flex-col justify-between text-white">
+                        <div>
+                            <h2 class="text-4xl font-serif font-bold mb-6">Let's build something extraordinary.</h2>
+                            <p class="text-brand-100 text-lg mb-8">Ready to take your digital presence to the next level? I'm currently accepting new projects.</p>
+                            
+                            <div class="space-y-4">
+                                <a href="mailto:hello@jannatul.com" class="interactable flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition">
+                                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><i class="fas fa-envelope"></i></div>
+                                    <span>hello@jannatul.com</span>
+                                </a>
+                                <a href="tel:+880123456789" class="interactable flex items-center space-x-4 p-4 rounded-xl hover:bg-white/10 transition">
+                                    <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"><i class="fas fa-phone"></i></div>
+                                    <span>+880 1234 567890</span>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-12">
+                            <div class="flex space-x-4">
+                                <a href="#" class="interactable w-10 h-10 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-brand-900 transition"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="#" class="interactable w-10 h-10 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-brand-900 transition"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="interactable w-10 h-10 rounded-full border border-white/30 flex items-center justify-center hover:bg-white hover:text-brand-900 transition"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-12 lg:p-16">
+                        <form class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Your Name</label>
+                                <input type="text" class="interactable w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Email Address</label>
+                                <input type="email" class="interactable w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition" placeholder="john@company.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">How can I help?</label>
+                                <textarea rows="3" class="interactable w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition" placeholder="Tell me a bit about your project..."></textarea>
+                            </div>
+                            <button class="interactable w-full py-4 bg-brand-600 text-white font-bold rounded-lg hover:bg-brand-700 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-center">
+        <p class="font-serif italic text-lg mb-2">"Digital impact requires human insight."</p>
+        <div class="text-sm">
+            &copy; <script>document.write(new Date().getFullYear())</script> Jannatul Ferdous Kana. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- Scripts for Logic -->
+    <script>
+        // --- 1. Audio Engine (Piano Sound) ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let soundEnabled = true;
+        
+        // Frequencies for a C Major scale (approx) to cycle through
+        // C4, D4, E4, F4, G4, A4, B4, C5
+        const notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88, 523.25];
+        let noteIndex = 0;
+
+        function playPianoNote() {
+            if (!soundEnabled || audioCtx.state === 'suspended') {
+                audioCtx.resume().catch(e => console.log(e));
+                if(!soundEnabled) return;
+            }
+
+            // Create oscillator (sound source)
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+
+            // Set wave type to triangle for a softer, piano-like tone (sine is too pure, square too harsh)
+            oscillator.type = 'triangle';
+            
+            // Pick a note and cycle
+            const freq = notes[noteIndex];
+            noteIndex = (noteIndex + 1) % notes.length; // Loop through scale
+            
+            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+            // Envelope (Fade in and Fade out) to simulate a key strike
+            // Start at 0 volume
+            gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+            // Quick attack to 0.1 volume
+            gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.02);
+            // Long decay to 0
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.5);
+
+            // Connect graph
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            // Play
+            oscillator.start();
+            oscillator.stop(audioCtx.currentTime + 1.5);
+        }
+
+        // Toggle Sound
+        const toggleBtn = document.getElementById('sound-toggle');
+        const toggleIcon = toggleBtn.querySelector('i');
+        
+        toggleBtn.addEventListener('click', () => {
+            soundEnabled = !soundEnabled;
+            if (soundEnabled) {
+                toggleIcon.className = 'fas fa-volume-up text-xl group-hover:animate-pulse';
+                toggleBtn.classList.remove('opacity-50');
+            } else {
+                toggleIcon.className = 'fas fa-volume-mute text-xl';
+                toggleBtn.classList.add('opacity-50');
+            }
+        });
+
+
+        // --- 2. Custom Cursor Logic ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        
+        // Mouse movement
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            // Dot follows instantly
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Outline follows with slight delay (handled by CSS transition usually, or simple keyframe)
+            // Using animate for smooth trailing effect
+            cursorOutline.animate({
+                left: `${posX}px`,
+                top: `${posY}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Add interaction effects
+        const interactables = document.querySelectorAll('.interactable, a, button');
+        interactables.forEach(el => {
+            // Mouse Enter: Grow cursor + Play Sound
+            el.addEventListener('mouseenter', () => {
+                document.body.classList.add('hovering');
+                playPianoNote(); // Play sound
+            });
+            
+            // Mouse Leave: Shrink cursor
+            el.addEventListener('mouseleave', () => {
+                document.body.classList.remove('hovering');
+            });
+        });
+
+
+        // --- 3. UI Logic (Mobile Menu & Scroll) ---
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md');
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.style.background = 'rgba(255, 255, 255, 0.85)';
+            }
+        });
+    </script>
+</body>
+</html>
