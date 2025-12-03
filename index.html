@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jannatul Ferdous Kana | Strategic Digital Marketer & Founder</title>
+    <title>Jannatul Ferdaus Kana | Strategic Digital Marketer & Founder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
@@ -23,10 +23,10 @@
                             700: '#7e22ce',
                             800: '#6b21a8',
                             900: '#581c87', // Deep Purple
-                            950: '#3b0764', // Darkest Purple
+                            950: '#06020a', // Ultra dark background for deeper contrast
                         },
                         dark: {
-                            950: '#0a0312', // Ultra dark background
+                            950: '#0a0312', 
                             900: '#140526', // Panel background
                             800: '#1f0a3a', // Card background
                         },
@@ -43,6 +43,7 @@
                         'shimmer': 'shimmer 2s linear infinite',
                         'dash-progress': 'dashProgress 3s ease-out forwards', // Custom animation for the circle
                         'rotate-border': 'rotateBorder 4s linear infinite', // New animation for the border effect
+                        'nav-hover': 'navHover 0.5s ease-in-out forwards',
                     },
                     keyframes: {
                         float: {
@@ -66,10 +67,15 @@
                             '0%': { backgroundPosition: '0% 50%' },
                             '50%': { backgroundPosition: '100% 50%' },
                             '100%': { backgroundPosition: '0% 50%' },
+                        },
+                        navHover: {
+                            '0%': { backgroundPosition: 'left' },
+                            '100%': { backgroundPosition: 'right' }
                         }
                     },
                     backgroundImage: {
                         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'premium-bg': 'radial-gradient(ellipse at 70% 30%, rgba(147, 51, 234, 0.1) 0%, transparent 80%)', // Subtle hero gradient
                     }
                 }
             }
@@ -87,14 +93,14 @@
         }
 
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px; /* Slightly thicker */
         }
         ::-webkit-scrollbar-track {
             background: #0a0312;
         }
         ::-webkit-scrollbar-thumb {
-            background: #581c87;
-            border-radius: 3px;
+            background: #a855f7; 
+            border-radius: 4px;
         }
 
         /* --- Custom Cursor --- */
@@ -107,18 +113,21 @@
             pointer-events: none;
         }
         .cursor-dot {
-            width: 6px; height: 6px;
+            width: 8px; 
+            height: 8px;
             background-color: #d8b4fe;
-            box-shadow: 0 0 10px #d8b4fe;
+            box-shadow: 0 0 15px #d8b4fe; 
         }
         .cursor-outline {
-            width: 30px; height: 30px;
-            border: 1px solid rgba(216, 180, 254, 0.4);
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
+            width: 40px; 
+            height: 40px;
+            border: 2px solid rgba(216, 180, 254, 0.6); 
+            transition: width 0.2s cubic-bezier(0.2, 0, 0, 1), height 0.2s cubic-bezier(0.2, 0, 0, 1), background-color 0.2s;
         }
         body.hovering .cursor-outline {
-            width: 60px; height: 60px;
-            background-color: rgba(216, 180, 254, 0.05);
+            width: 70px; 
+            height: 70px;
+            background-color: rgba(216, 180, 254, 0.1); 
             border-color: #d8b4fe;
         }
         @media (max-width: 768px) {
@@ -128,74 +137,81 @@
 
         /* --- Glassmorphism & Effects --- */
         .glass-nav {
-            background: rgba(10, 3, 18, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            background: rgba(10, 3, 18, 0.85); 
+            backdrop-filter: blur(30px); 
+            border-bottom: 1px solid rgba(255,255,255,0.1); 
         }
         
         .bento-card {
-            background: rgba(31, 10, 58, 0.4); 
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(31, 10, 58, 0.6); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.15); /* Slightly brighter border */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5); /* Deeper depth */
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
         .bento-card:hover {
-            background: rgba(45, 27, 78, 0.7);
-            border-color: rgba(168, 85, 247, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 40px -10px rgba(126, 34, 206, 0.3);
+            background: rgba(45, 27, 78, 0.9); /* More opaque on hover */
+            border-color: rgba(168, 85, 247, 0.7); 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 60px -10px rgba(126, 34, 206, 0.6); 
         }
         
         /* Spotlight Effect */
         .spotlight {
-            background: radial-gradient(600px circle at var(--x) var(--y), rgba(139, 92, 246, 0.15), transparent 40%);
+            background: radial-gradient(800px circle at var(--x) var(--y), rgba(139, 92, 246, 0.25), transparent 60%); 
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             z-index: 1;
             pointer-events: none;
         }
 
-        /* --- Scroll Reveal Animation --- */
+        /* --- Scroll Reveal --- */
         .reveal {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+            transform: translateY(40px); 
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1); /* Even slower, premium transition */
         }
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
         }
 
-        .text-gradient {
-            background: linear-gradient(135deg, #fff 0%, #d8b4fe 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
         .timeline-line {
             position: absolute;
             left: 2rem;
             top: 0;
             bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, #7e22ce, #3b0764 90%, transparent);
+            width: 3px; 
+            background: linear-gradient(to bottom, #d8b4fe, #7e22ce 90%, transparent); 
         }
 
+        /* Nav Item Premium Hover */
+        .nav-item-hover {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s;
+        }
+        .nav-item-hover:hover {
+            color: #fff; /* Keep text white on hover since we are using a transparent background */
+            text-shadow: 0 0 8px rgba(216, 180, 254, 0.7); /* Subtle glow on hover */
+        }
+        
         /* Custom Styles for the Circular Chart */
         .progress-ring {
-            transform: rotate(-90deg); /* Start the circle at the top */
+            transform: rotate(-90deg); 
         }
         .animate-dash-progress {
             animation: dashProgress 3s ease-out forwards;
         }
         
-        /* New Advanced Card Border Style */
+        /* New Advanced Card Border Style (for Hero Visual) */
         .advanced-card-border {
             position: relative;
             overflow: hidden;
-            border: none; /* Remove base border */
+            border: none;
+            border-radius: 1.5rem;
             z-index: 10;
         }
 
@@ -220,17 +236,18 @@
         .advanced-card-border:after {
             content: '';
             position: absolute;
-            inset: 1px; /* Creates the border width */
-            background: #140526; /* Match the dark-900 or dark-800 background */
-            border-radius: calc(1.5rem - 1px); /* Match card roundedness - 1px for inset */
+            inset: 2px; 
+            background: #0a0312; /* Match the body background for a floating effect */
+            border-radius: calc(1.5rem - 2px);
             z-index: -1;
         }
         
         /* Inner circle glow effect */
         .inner-ring-glow {
-            box-shadow: inset 0 0 15px rgba(168, 85, 247, 0.4), 0 0 8px rgba(168, 85, 247, 0.2);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.6); /* Even stronger outer glow */
             border-radius: 50%;
             background: rgba(0, 0, 0, 0.2);
+            padding: 1rem;
         }
 
     </style>
@@ -261,10 +278,10 @@
                 </div>
                 
                 <div class="hidden lg:flex space-x-1 items-center bg-white/5 p-1 rounded-full border border-white/5 backdrop-blur-md">
-                    <a href="#home" class="interactable px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 transition">Home</a>
-                    <a href="#expertise" class="interactable px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 transition">Expertise</a>
-                    <a href="#experience" class="interactable px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 transition">Career</a>
-                    <a href="#projects" class="interactable px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 hover:text-white hover:bg-white/10 transition">Leadership</a>
+                    <a href="#home" class="interactable nav-item-hover px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 transition">Home</a>
+                    <a href="#expertise" class="interactable nav-item-hover px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 transition">Expertise</a>
+                    <a href="#experience" class="interactable nav-item-hover px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 transition">Career</a>
+                    <a href="#projects" class="interactable nav-item-hover px-4 py-1.5 rounded-full text-xs font-medium text-slate-300 transition">Leadership</a>
                     <a href="#contact" class="interactable ml-2 px-5 py-1.5 bg-brand-600 text-white text-xs font-bold rounded-full hover:bg-brand-500 transition shadow-lg shadow-brand-500/20">Let's Talk</a>
                 </div>
 
@@ -289,41 +306,41 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden z-10">
+    <section id="home" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden z-10 bg-premium-bg">
         <!-- Abstract BG Elements -->
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-600/10 rounded-full mix-blend-screen filter blur-[100px] animate-pulse"></div>
-        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600/5 rounded-full mix-blend-screen filter blur-[120px]"></div>
-        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-600/10 rounded-full mix-blend-screen filter blur-[100px] animate-pulse opacity-50"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600/5 rounded-full mix-blend-screen filter blur-[120px] opacity-30"></div>
+        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 w-full">
             <div class="flex flex-col lg:flex-row items-center gap-16">
                 <div class="lg:w-3/5 text-center lg:text-left reveal active">
-                    <div class="inline-flex items-center px-3 py-1 rounded-full border border-brand-500/30 bg-brand-500/10 text-brand-300 text-[10px] font-bold tracking-widest uppercase mb-6 backdrop-blur-sm">
-                        <span class="w-2 h-2 rounded-full bg-green-400 mr-2 animate-pulse"></span>
+                    <div class="inline-flex items-center px-4 py-2 rounded-full border border-brand-500/40 bg-brand-500/15 text-brand-300 text-xs font-bold tracking-widest uppercase mb-6 backdrop-blur-sm shadow-md">
+                        <span class="w-2.5 h-2.5 rounded-full bg-green-400 mr-2 animate-pulse"></span>
                         Founder, Director & MBA Strategist
                     </div>
                     
                     <h1 class="text-5xl sm:text-7xl lg:text-8xl font-bold text-white tracking-tight mb-8 font-serif leading-[0.9]">
                         Jannatul <br>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-brand-200 to-white">Ferdous Kana.</span>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 via-brand-200 to-white">Ferdaus Kana.</span>
                     </h1>
                     
-                    <p class="text-lg text-slate-400 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light">
-                        <strong class="text-white">Digital Marketing Founder & Specialist.</strong> CEO of **Digi up Venture** and Director of **Future Wish Education**. I leverage management expertise and data analytics to drive business growth and enhance global brand visibility.
+                    <p class="text-lg text-slate-300 mb-10 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-light">
+                        <strong class="text-white font-semibold">Digital Marketing Founder & Specialist.</strong> CEO of **Digi up Venture** and Director of **Future Wish Education**. I leverage management expertise and data analytics to drive business growth and enhance global brand visibility.
                     </p>
                     
                     <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                        <a href="#experience" class="interactable px-8 py-4 bg-white text-dark-950 rounded-full font-bold hover:bg-brand-50 transition shadow-[0_0_30px_rgba(255,255,255,0.1)] flex items-center justify-center">
+                        <a href="#experience" class="interactable px-10 py-4 bg-brand-500 text-white rounded-full font-bold text-sm hover:bg-brand-600 transition shadow-[0_0_40px_rgba(168,85,247,0.4)] flex items-center justify-center">
                             View Career Timeline
                         </a>
-                        <a href="mailto:jannatulferdauskana@gmail.com" class="interactable px-8 py-4 bg-white/5 border border-white/10 text-white rounded-full font-semibold hover:bg-white/10 hover:border-white/20 transition flex items-center justify-center backdrop-blur-md">
+                        <a href="mailto:jannatulferdauskana@gmail.com" class="interactable px-10 py-4 bg-white/10 border border-white/20 text-white rounded-full font-semibold text-sm hover:bg-white/20 hover:border-brand-300 transition flex items-center justify-center backdrop-blur-md">
                             <i class="fas fa-paper-plane mr-2 text-brand-400"></i> Get in Touch
                         </a>
                     </div>
                     
                     <!-- Social Links -->
-                    <div class="mt-12 flex items-center justify-center lg:justify-start gap-6 border-t border-white/5 pt-8">
-                        <span class="text-xs text-slate-500 uppercase tracking-widest mr-2">Connect:</span>
+                    <div class="mt-12 flex items-center justify-center lg:justify-start gap-6 border-t border-white/10 pt-8">
+                        <span class="text-sm text-slate-500 uppercase tracking-widest mr-2">Connect:</span>
                         <a href="https://www.linkedin.com/in/jannatul-ferdaus-kana-2500b1225/" target="_blank" class="text-2xl text-slate-400 hover:text-brand-400 transition interactable"><i class="fab fa-linkedin"></i></a>
                         <a href="https://www.facebook.com/kanaJannatulferdaus.my" target="_blank" class="text-2xl text-slate-400 hover:text-brand-400 transition interactable"><i class="fab fa-facebook"></i></a>
                         <a href="https://www.instagram.com/jannatul_ferdaus_kana/" target="_blank" class="text-2xl text-slate-400 hover:text-brand-400 transition interactable"><i class="fab fa-instagram"></i></a>
@@ -334,7 +351,7 @@
 
                 <!-- Marketing Simulation Visual (Advanced Circular Chart) -->
                 <div class="lg:w-2/5 relative reveal hidden lg:block">
-                    <!-- Apply advanced border class here -->
+                    <!-- Advanced Border & Bento Card Container -->
                     <div class="relative w-full aspect-[3/4] rounded-2xl shadow-2xl bg-dark-900 group p-6 flex flex-col items-center justify-center advanced-card-border">
 
                         <!-- Main Circular Chart Container -->
@@ -342,7 +359,7 @@
                             <svg class="w-full h-full transform" viewBox="0 0 300 300">
                                 <!-- Background circle (Track) -->
                                 <circle
-                                    class="text-white/10"
+                                    class="text-white/10 progress-track"
                                     stroke="currentColor"
                                     stroke-width="20"
                                     fill="transparent"
@@ -410,7 +427,7 @@
     <section id="expertise" class="py-24 relative z-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12 reveal">
-                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-2 block">Founding & Strategy</span>
+                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-sm mb-2 block">Founding & Strategy</span>
                 <h2 class="text-4xl font-serif font-bold text-white">Full Stack Digital Mastery</h2>
             </div>
             
@@ -481,10 +498,10 @@
     </section>
 
     <!-- Experience Section (Timeline) -->
-    <section id="experience" class="py-24 bg-dark-900 relative z-20">
+    <section id="experience" class="py-24 bg-dark-900 border-t border-white/5 relative z-20">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-16 reveal">
-                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-2 block">Career Path</span>
+                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-sm mb-2 block">Career Path</span>
                 <h2 class="text-4xl font-serif font-bold text-white">Professional Experience</h2>
             </div>
 
@@ -607,10 +624,10 @@
     </section>
 
     <!-- Leadership & Affiliations Section -->
-    <section id="projects" class="py-24 bg-dark-950 relative z-20">
+    <section id="projects" class="py-24 bg-dark-950 relative z-20 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12 reveal">
-                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-xs mb-2 block">Global Impact & Management</span>
+                <span class="text-brand-500 font-bold tracking-[0.2em] uppercase text-sm mb-2 block">Global Impact & Management</span>
                 <h2 class="text-4xl font-serif font-bold text-white">Leadership, Affiliations & Speaking</h2>
             </div>
             
@@ -684,14 +701,14 @@
             <div class="grid lg:grid-cols-2 gap-16">
                 <!-- Education -->
                 <div class="reveal">
-                    <h3 class="text-2xl font-bold text-white mb-8 border-l-4 border-brand-500 pl-4">Education</h3>
+                    <h3 class="text-2xl font-bold text-white mb-8 border-l-4 border-brand-500 pl-4 font-serif">Education</h3>
                     <div class="space-y-8">
-                        <div class="group interactable">
+                        <div class="group interactable p-4 bento-card hover:transform-none hover:shadow-lg">
                             <h4 class="text-xl font-bold text-white group-hover:text-brand-400 transition">Master of Business Administration (MBA)</h4>
                             <p class="text-slate-400 text-sm mt-1">International Islamic University Malaysia (IIUM)</p>
                             <p class="text-slate-500 text-xs">Mahallah Safiyyah Block PG (IIUM)</p>
                         </div>
-                        <div class="group interactable">
+                        <div class="group interactable p-4 bento-card hover:transform-none hover:shadow-lg">
                             <h4 class="text-xl font-bold text-white group-hover:text-brand-400 transition">Bachelor of Business Administration (BBA)</h4>
                             <p class="text-slate-400 text-sm mt-1">Universiti Malaysia Terengganu (UMT)</p>
                             <p class="text-slate-500 text-xs">Science In Marketing (Management of Marketing)</p>
@@ -701,24 +718,24 @@
 
                 <!-- Certifications Grid -->
                 <div class="reveal">
-                    <h3 class="text-2xl font-bold text-white mb-8 border-l-4 border-brand-500 pl-4">Certifications & Awards</h3>
+                    <h3 class="text-2xl font-bold text-white mb-8 border-l-4 border-brand-500 pl-4 font-serif">Certifications & Awards</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="bg-dark-950 p-4 rounded-xl border border-white/5 hover:border-brand-500/30 transition interactable">
+                        <div class="bg-dark-950 p-4 rounded-xl border border-white/10 hover:border-brand-500/40 transition interactable hover:shadow-lg">
                             <div class="text-brand-400 font-bold text-xs uppercase mb-2">Award</div>
                             <div class="text-white text-sm font-bold">Academic Dean's Award</div>
                             <div class="text-slate-500 text-xs mt-1">UMT</div>
                         </div>
-                        <div class="bg-dark-950 p-4 rounded-xl border border-white/5 hover:border-brand-500/30 transition interactable">
+                        <div class="bg-dark-950 p-4 rounded-xl border border-white/10 hover:border-brand-500/40 transition interactable hover:shadow-lg">
                             <div class="text-blue-400 font-bold text-xs uppercase mb-2">Certifications</div>
                             <div class="text-white text-sm font-bold">Expert IT Park, SBF Institute, etc.</div>
                             <div class="text-slate-500 text-xs mt-1">Digital Marketing Specialist</div>
                         </div>
-                        <div class="bg-dark-950 p-4 rounded-xl border border-white/5 hover:border-brand-500/30 transition interactable">
+                        <div class="bg-dark-950 p-4 rounded-xl border border-white/10 hover:border-brand-500/40 transition interactable hover:shadow-lg">
                             <div class="text-purple-400 font-bold text-xs uppercase mb-2">Training</div>
                             <div class="text-white text-sm font-bold">Training for Trainers</div>
                             <div class="text-slate-500 text-xs mt-1">Mentoring for Life (IIUM)</div>
                         </div>
-                        <div class="bg-dark-950 p-4 rounded-xl border border-white/5 hover:border-brand-500/30 transition interactable">
+                        <div class="bg-dark-950 p-4 rounded-xl border border-white/10 hover:border-brand-500/40 transition interactable hover:shadow-lg">
                             <div class="text-green-400 font-bold text-xs uppercase mb-2">Leadership</div>
                             <div class="text-white text-sm font-bold">HIKMAH For Young Leaders</div>
                             <div class="text-slate-500 text-xs mt-1">Influence With Purpose</div>
@@ -730,27 +747,27 @@
     </section>
 
     <!-- Footer / Contact -->
-    <section id="contact" class="py-24 relative overflow-hidden bg-dark-950">
+    <section id="contact" class="py-24 relative overflow-hidden bg-dark-950 border-t border-white/10">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-20">
             <h2 class="text-4xl md:text-6xl font-serif font-bold text-white mb-8">Ready to Scale?</h2>
             <div class="flex flex-col md:flex-row justify-center gap-6 mb-16">
-                 <a href="mailto:jannatulferdauskana@gmail.com" class="interactable flex items-center justify-center gap-3 px-8 py-4 bg-brand-600 rounded-full text-white font-bold hover:bg-brand-500 transition shadow-lg shadow-brand-500/25">
+                 <a href="mailto:jannatulferdauskana@gmail.com" class="interactable px-10 py-4 bg-brand-600 rounded-full text-white font-bold text-sm hover:bg-brand-500 transition shadow-xl shadow-brand-500/40 flex items-center justify-center gap-3">
                     <i class="fas fa-envelope"></i> jannatulferdauskana@gmail.com
                  </a>
-                 <a href="#" class="interactable flex items-center justify-center gap-3 px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-bold hover:bg-white/10 transition">
+                 <a href="#" class="interactable px-10 py-4 bg-white/10 border border-white/20 rounded-full text-white font-bold text-sm hover:bg-white/20 transition flex items-center justify-center gap-3">
                     <i class="fas fa-phone"></i> +60 103361664
                  </a>
             </div>
             
             <div class="flex justify-center gap-8 mb-8">
-                <a href="https://www.linkedin.com/in/jannatul-ferdaus-kana-2500b1225/" target="_blank" class="text-slate-500 hover:text-white transition text-2xl interactable"><i class="fab fa-linkedin"></i></a>
-                <a href="https://www.facebook.com/kanaJannatulferdaus.my" target="_blank" class="text-slate-500 hover:text-white transition text-2xl interactable"><i class="fab fa-facebook"></i></a>
-                <a href="https://www.instagram.com/jannatul_ferdaus_kana/" target="_blank" class="text-slate-500 hover:text-white transition text-2xl interactable"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.youtube.com/@DigitalmarketerJannatulkana" target="_blank" class="text-slate-500 hover:text-white transition text-2xl interactable"><i class="fab fa-youtube"></i></a>
-                <a href="https://www.tiktok.com/@jannatulferdauskana" target="_blank" class="text-slate-500 hover:text-white transition text-2xl interactable"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.linkedin.com/in/jannatul-ferdaus-kana-2500b1225/" target="_blank" class="text-slate-500 hover:text-brand-400 transition text-2xl interactable"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.facebook.com/kanaJannatulferdaus.my" target="_blank" class="text-2xl text-slate-400 hover:text-brand-400 transition interactable"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/jannatul_ferdaus_kana/" target="_blank" class="text-2xl text-slate-400 hover:text-brand-400 transition interactable"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/@DigitalmarketerJannatulkana" target="_blank" class="text-2xl text-slate-400 hover:text-brand-400 transition interactable"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.tiktok.com/@jannatulferdauskana" target="_blank" class="text-2xl text-slate-400 hover:text-brand-400 transition interactable"><i class="fab fa-tiktok"></i></a>
             </div>
             
-            <p class="text-slate-600 text-xs uppercase tracking-widest">&copy; 2025 Jannatul Ferdous Kana. All Rights Reserved.</p>
+            <p class="text-slate-600 text-xs uppercase tracking-widest">&copy; 2025 Jannatul Ferdaus Kana. All Rights Reserved.</p>
         </div>
     </section>
 
