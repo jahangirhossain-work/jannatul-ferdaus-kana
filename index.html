@@ -269,15 +269,83 @@
                     </div>
                 </div>
 
-                <!-- Abstract Visual -->
+                <!-- Marketing Simulation Visual (Replaced image with dynamic SVG chart) -->
                 <div class="lg:w-2/5 relative reveal hidden lg:block">
-                     <div class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-dark-900 group">
-                        <div class="absolute inset-0 bg-gradient-to-b from-brand-900/20 to-dark-950 flex flex-col items-center justify-center">
-                            <i class="fas fa-user-circle text-8xl text-white/10 group-hover:text-brand-500/20 transition duration-500"></i>
-                            <div class="mt-4 text-xs font-mono text-slate-500">Jannatul Ferdous Kana</div>
+                    <div class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-dark-900 group p-6">
+                        <!-- Marketing Simulation Dashboard -->
+                        <div class="relative h-full w-full flex flex-col justify-end">
+                            <!-- Title Bar -->
+                            <div class="flex justify-between items-center mb-4 text-xs text-brand-300 font-mono border-b border-white/10 pb-2">
+                                <span>Performance: Q4 '24 Growth</span>
+                                <span class="text-green-400 flex items-center"><i class="fas fa-arrow-up mr-1"></i> +45% ROI</span>
+                            </div>
+
+                            <!-- Graph Area (SVG for Animated Growth Curve) -->
+                            <svg viewBox="0 0 300 150" class="w-full h-auto text-brand-500" preserveAspectRatio="none">
+                                <defs>
+                                    <linearGradient id="growthGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:rgb(216, 180, 254);stop-opacity:0.8" />
+                                        <stop offset="100%" style="stop-color:rgb(168, 85, 247);stop-opacity:1" />
+                                    </linearGradient>
+                                    <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:rgb(168, 85, 247);stop-opacity:0.2" />
+                                        <stop offset="100%" style="stop-color:rgb(168, 85, 247);stop-opacity:0" />
+                                    </linearGradient>
+                                </defs>
+                                
+                                <!-- Background Grid -->
+                                <g class="text-white/10" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2">
+                                    <line x1="0" y1="50" x2="300" y2="50" />
+                                    <line x1="0" y1="100" x2="300" y2="100" />
+                                </g>
+
+                                <!-- Animated Path (The line) -->
+                                <polyline id="growth-line" fill="none" stroke="url(#growthGradient)" stroke-width="4" stroke-linecap="round" points="0,140 50,120 100,100 150,80 200,60 250,40 300,20">
+                                    <animate attributeName="points" dur="4s" repeatCount="indefinite"
+                                        values="
+                                            0,140 50,120 100,100 150,80 200,60 250,40 300,20;
+                                            0,130 50,100 100,70 150,90 200,50 250,30 300,10;
+                                            0,140 50,120 100,100 150,80 200,60 250,40 300,20
+                                        "
+                                        keyTimes="0;0.5;1"
+                                        calcMode="spline"
+                                        keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+                                    />
+                                </polyline>
+
+                                <!-- Animated Area Fill -->
+                                <polygon fill="url(#areaGradient)" points="0,150 0,140 50,120 100,100 150,80 200,60 250,40 300,20 300,150">
+                                    <animate attributeName="points" dur="4s" repeatCount="indefinite"
+                                        values="
+                                            0,150 0,140 50,120 100,100 150,80 200,60 250,40 300,20 300,150;
+                                            0,150 0,130 50,100 100,70 150,90 200,50 250,30 300,10 300,150;
+                                            0,150 0,140 50,120 100,100 150,80 200,60 250,40 300,20 300,150
+                                        "
+                                        keyTimes="0;0.5;1"
+                                        calcMode="spline"
+                                        keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+                                    />
+                                </polygon>
+                            </svg>
+
+                            <!-- Key Metrics Overlay -->
+                            <div class="flex justify-around mt-4">
+                                <div class="text-center">
+                                    <div class="text-lg font-bold text-white">2.5M+</div>
+                                    <div class="text-xs text-slate-500">Impressions</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-lg font-bold text-white">8.5K</div>
+                                    <div class="text-xs text-slate-500">Leads</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-lg font-bold text-white">3.2x</div>
+                                    <div class="text-xs text-slate-500">ROI</div>
+                                </div>
+                            </div>
                         </div>
                         
-                        <!-- Founder Badges -->
+                        <!-- Founder Badges (Kept in place) -->
                         <div class="absolute top-4 left-4 bg-brand-500/20 backdrop-blur-md border border-brand-500/30 p-2 rounded-xl text-center">
                             <i class="fas fa-code-branch text-brand-400 text-xl"></i>
                             <div class="text-xs text-white mt-1 font-bold">Digi up Venture</div>
@@ -286,7 +354,7 @@
                             <i class="fas fa-graduation-cap text-brand-400 text-xl"></i>
                             <div class="text-xs text-white mt-1 font-bold">Future Wish Ed.</div>
                         </div>
-                     </div>
+                    </div>
                 </div>
             </div>
         </div>
