@@ -41,6 +41,7 @@
                         'spin-slow': 'spin 15s linear infinite',
                         'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
                         'shimmer': 'shimmer 2s linear infinite',
+                        'dash-progress': 'dashProgress 3s ease-out forwards', // Custom animation for the circle
                     },
                     keyframes: {
                         float: {
@@ -54,6 +55,11 @@
                         shimmer: {
                             '0%': { backgroundPosition: '-1000px 0' },
                             '100%': { backgroundPosition: '1000px 0' }
+                        },
+                        // Keyframes for the circular dash animation (90% fill for stroke-dashoffset)
+                        dashProgress: {
+                            '0%': { strokeDashoffset: '785.4' }, /* Circumference of a 125 radius circle is approx 785.4 */
+                            '100%': { strokeDashoffset: '78.54' }, /* 785.4 * (1 - 0.9) = 78.54 */
                         }
                     },
                     backgroundImage: {
@@ -170,6 +176,14 @@
             width: 2px;
             background: linear-gradient(to bottom, #7e22ce, #3b0764 90%, transparent);
         }
+
+        /* Custom Styles for the Circular Chart */
+        .progress-ring {
+            transform: rotate(-90deg); /* Start the circle at the top */
+        }
+        .animate-dash-progress {
+            animation: dashProgress 3s ease-out forwards;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-brand-500 selection:text-white">
@@ -269,79 +283,61 @@
                     </div>
                 </div>
 
-                <!-- Marketing Simulation Visual (Replaced image with dynamic SVG chart) -->
+                <!-- Marketing Simulation Visual (Advanced Circular Chart) -->
                 <div class="lg:w-2/5 relative reveal hidden lg:block">
-                    <div class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-dark-900 group p-6">
-                        <!-- Marketing Simulation Dashboard -->
-                        <div class="relative h-full w-full flex flex-col justify-end">
-                            <!-- Title Bar -->
-                            <div class="flex justify-between items-center mb-4 text-xs text-brand-300 font-mono border-b border-white/10 pb-2">
-                                <span>Performance: Q4 '24 Growth</span>
-                                <span class="text-green-400 flex items-center"><i class="fas fa-arrow-up mr-1"></i> +45% ROI</span>
-                            </div>
+                    <div class="relative w-full aspect-[3/4] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-dark-900 group p-6 flex flex-col items-center justify-center">
 
-                            <!-- Graph Area (SVG for Animated Growth Curve) -->
-                            <svg viewBox="0 0 300 150" class="w-full h-auto text-brand-500" preserveAspectRatio="none">
+                        <!-- Main Circular Chart Container -->
+                        <div class="relative w-64 h-64 flex items-center justify-center mb-8">
+                            <svg class="w-full h-full transform" viewBox="0 0 300 300">
+                                <!-- Background circle (Track) -->
+                                <circle
+                                    class="text-white/10"
+                                    stroke="currentColor"
+                                    stroke-width="15"
+                                    fill="transparent"
+                                    r="125"
+                                    cx="150"
+                                    cy="150"
+                                />
+                                <!-- Foreground circle (Progress) -->
+                                <circle
+                                    class="progress-ring text-brand-500 animate-dash-progress"
+                                    stroke="url(#progressGradient)"
+                                    stroke-width="15"
+                                    stroke-linecap="round"
+                                    fill="transparent"
+                                    r="125"
+                                    cx="150"
+                                    cy="150"
+                                    style="stroke-dasharray: 785.4; stroke-dashoffset: 78.54;" 
+                                />
+                                <!-- Gradient Definition -->
                                 <defs>
-                                    <linearGradient id="growthGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                        <stop offset="0%" style="stop-color:rgb(216, 180, 254);stop-opacity:0.8" />
-                                        <stop offset="100%" style="stop-color:rgb(168, 85, 247);stop-opacity:1" />
-                                    </linearGradient>
-                                    <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                        <stop offset="0%" style="stop-color:rgb(168, 85, 247);stop-opacity:0.2" />
-                                        <stop offset="100%" style="stop-color:rgb(168, 85, 247);stop-opacity:0" />
+                                    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:rgb(216, 180, 254);stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:rgb(147, 51, 234);stop-opacity:1" />
                                     </linearGradient>
                                 </defs>
-                                
-                                <!-- Background Grid -->
-                                <g class="text-white/10" stroke="currentColor" stroke-width="1" stroke-dasharray="2,2">
-                                    <line x1="0" y1="50" x2="300" y2="50" />
-                                    <line x1="0" y1="100" x2="300" y2="100" />
-                                </g>
-
-                                <!-- Animated Path (The line) -->
-                                <polyline id="growth-line" fill="none" stroke="url(#growthGradient)" stroke-width="4" stroke-linecap="round" points="0,140 50,120 100,100 150,80 200,60 250,40 300,20">
-                                    <animate attributeName="points" dur="4s" repeatCount="indefinite"
-                                        values="
-                                            0,140 50,120 100,100 150,80 200,60 250,40 300,20;
-                                            0,130 50,100 100,70 150,90 200,50 250,30 300,10;
-                                            0,140 50,120 100,100 150,80 200,60 250,40 300,20
-                                        "
-                                        keyTimes="0;0.5;1"
-                                        calcMode="spline"
-                                        keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
-                                    />
-                                </polyline>
-
-                                <!-- Animated Area Fill -->
-                                <polygon fill="url(#areaGradient)" points="0,150 0,140 50,120 100,100 150,80 200,60 250,40 300,20 300,150">
-                                    <animate attributeName="points" dur="4s" repeatCount="indefinite"
-                                        values="
-                                            0,150 0,140 50,120 100,100 150,80 200,60 250,40 300,20 300,150;
-                                            0,150 0,130 50,100 100,70 150,90 200,50 250,30 300,10 300,150;
-                                            0,150 0,140 50,120 100,100 150,80 200,60 250,40 300,20 300,150
-                                        "
-                                        keyTimes="0;0.5;1"
-                                        calcMode="spline"
-                                        keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
-                                    />
-                                </polygon>
                             </svg>
 
-                            <!-- Key Metrics Overlay -->
-                            <div class="flex justify-around mt-4">
-                                <div class="text-center">
-                                    <div class="text-lg font-bold text-white">2.5M+</div>
-                                    <div class="text-xs text-slate-500">Impressions</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-lg font-bold text-white">8.5K</div>
-                                    <div class="text-xs text-slate-500">Leads</div>
-                                </div>
-                                <div class="text-center">
-                                    <div class="text-lg font-bold text-white">3.2x</div>
-                                    <div class="text-xs text-slate-500">ROI</div>
-                                </div>
+                            <!-- Center Content -->
+                            <div class="absolute text-center">
+                                <i class="fas fa-rocket text-5xl text-brand-400 mb-2"></i>
+                                <div class="text-4xl font-extrabold text-white font-serif">90%</div>
+                                <div class="text-sm text-slate-400 uppercase tracking-widest">Conversion Rate</div>
+                            </div>
+                        </div>
+
+                        <!-- Secondary Metrics -->
+                        <div class="flex justify-around w-full max-w-xs">
+                            <div class="text-center p-3 rounded-xl bg-white/5">
+                                <div class="text-xl font-bold text-green-400 flex items-center"><i class="fas fa-arrow-up text-sm mr-1"></i> 3.2X</div>
+                                <div class="text-xs text-slate-500">Avg. ROI</div>
+                            </div>
+                            <div class="text-center p-3 rounded-xl bg-white/5">
+                                <div class="text-xl font-bold text-white">8.5K</div>
+                                <div class="text-xs text-slate-500">Qualified Leads</div>
                             </div>
                         </div>
                         
